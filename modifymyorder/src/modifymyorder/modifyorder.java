@@ -76,8 +76,31 @@ public class modifyorder
 						MessageArea.clear();
 						MessageArea.sendKeys("Testing Automation");
 						
-						driver.findElement(By.className("mod-submit")).click();
-						driver.findElement(By.className("mod-done")).click();
+						//driver.switchTo().defaultContent();
+						driver.findElement(By.xpath("//div/div[2]/div/div/span")).click();
+						
+	
+					    driver.findElement(By.id("firstName")).click();
+					    driver.findElement(By.id("firstName")).clear();
+					    driver.findElement(By.id("firstName")).sendKeys("tagore");
+					    driver.findElement(By.id("lastName")).click();
+					    driver.findElement(By.id("lastName")).clear();
+					    driver.findElement(By.id("lastName")).sendKeys("gupt");
+					    driver.findElement(By.id("phoneNumber")).click();
+					    driver.findElement(By.id("phoneNumber")).clear();
+					    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
+					    driver.findElement(By.id("locationType")).click();
+					    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
+					    driver.findElement(By.xpath("//option[@value='2']")).click();
+					    driver.findElement(By.id("company")).click();
+					    driver.findElement(By.id("company")).clear();
+					    driver.findElement(By.id("company")).sendKeys("test");
+					    
+					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div/div/button[2]")).click();
+					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div[2]/button[2]")).click();
+					    
+					    wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
+					    driver.findElement(By.linkText("Close")).click();
 						driver.switchTo().defaultContent();
 						driver.quit();driver = null;
 				    }
