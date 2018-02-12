@@ -42,7 +42,7 @@ public class modifyorder
 		}
 
 	//Start the script 		
-	@Test
+	//@Test
 	public void FPT_ModifyOrder() throws Exception 
 		{           
 		           try
@@ -112,8 +112,59 @@ public class modifyorder
 						driver.quit();
 					}
 		}
-			
+	
+	@Test
+	public void ModifyOrder_False() throws Exception 
+	{           
+	           try
+				{
+					//Calling browser and accessing 18F URL
+					callBrowser();
+					deleteCookies();
+					driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
+					WebDriverWait wait = new WebDriverWait(driver, 60);
+					
+					//Click on My Orders, enter order details and click submit
+					driver.findElement(By.linkText("Track Your Order")).click();
+					
+					driver.findElement(By.id("label")).sendKeys("W00995422630853");
+					driver.findElement(By.id("label2")).sendKeys("11514");
+					driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
+					
+					driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
+					
+					String ErrorMessage = driver.findElement(By.className("orderNotModifiableErr")).getText();
+					System.out.println("Error message:" + ErrorMessage);
+					if(ErrorMessage.contains("This order may no longer be modified")){System.out.println("Order not modifiable - Passed");}
+					else {System.out.println("Past order modifiable - Failed");}
+					driver.quit();driver = null;
+			    }
 		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured");
+					driver.quit();
+				}
+	}
+
+	public void ModifyOrder_Logo() throws Exception 
+	{           
+	           try
+				{
+					//Calling browser and accessing 18F URL
+
+
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured, While executing ModifyOrder_Logo");
+					driver.quit();
+				}
+	}
+	
 
 public void callBrowser()
 {
