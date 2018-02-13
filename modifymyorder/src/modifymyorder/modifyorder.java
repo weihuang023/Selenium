@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.openqa.selenium.*;
@@ -25,9 +26,13 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import jxl.write.DateTime;
+
 import java.io.ByteArrayInputStream;
+
 import javax.imageio.ImageIO;
+
 import java.awt.Graphics2D;
 
 public class modifyorder 
@@ -42,67 +47,81 @@ public class modifyorder
 		}
 
 	//Start the script 		
-	//@Test
+	@Test
 	public void FPT_ModifyOrder() throws Exception 
 		{           
+		
+					String[][] order = {{"W00995422675557","11355"},{"W00995422630853","11514"}};
+					
 		           try
 					{
 						//Calling browser and accessing 18F URL
 						callBrowser();
 						deleteCookies();
 						driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
-						WebDriverWait wait = new WebDriverWait(driver, 60);
+//						WebDriverWait wait = new WebDriverWait(driver, 60);
 						
 						//Click on My Orders, enter order details and click submit
 						driver.findElement(By.linkText("Track Your Order")).click();
 						
-						driver.findElement(By.id("label")).sendKeys("W00995422630853");
-						driver.findElement(By.id("label2")).sendKeys("11514");
+						
+						driver.findElement(By.id("label")).sendKeys(order[0][0]);
+						driver.findElement(By.id("label2")).sendKeys(order[0][1]);
 						driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
 						
 						driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
 						
-						driver.findElement(By.id("modifyCardMessage")).click();
+						ModifyOrder_False();
+						checkCardMessage();
+						checkShipAddress();
+						checkDeliveryDate();
+						updateMessage();
+						driver.quit();
+//						updateAddress();
+//						updateDate();
+//						review();
 						
-						wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
-						
-						
-						WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
-						driver.switchTo().frame(iframeSwitch);						
-						WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
-						//WebElement MessageArea = driver.findElement(By.cssSelector("tesxtarea[id=\"editgiftmessage\"]"));
-						
-						MessageArea.sendKeys(Keys.TAB);
-						MessageArea.clear();
-						MessageArea.sendKeys("Testing Automation");
-						
-						//driver.switchTo().defaultContent();
-						driver.findElement(By.xpath("//div/div[2]/div/div/span")).click();
-						
-	
-					    driver.findElement(By.id("firstName")).click();
-					    driver.findElement(By.id("firstName")).clear();
-					    driver.findElement(By.id("firstName")).sendKeys("tagore");
-					    driver.findElement(By.id("lastName")).click();
-					    driver.findElement(By.id("lastName")).clear();
-					    driver.findElement(By.id("lastName")).sendKeys("gupt");
-					    driver.findElement(By.id("phoneNumber")).click();
-					    driver.findElement(By.id("phoneNumber")).clear();
-					    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
-					    driver.findElement(By.id("locationType")).click();
-					    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
-					    driver.findElement(By.xpath("//option[@value='2']")).click();
-					    driver.findElement(By.id("company")).click();
-					    driver.findElement(By.id("company")).clear();
-					    driver.findElement(By.id("company")).sendKeys("test");
-					    
-					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div/div/button[2]")).click();
-					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div[2]/button[2]")).click();
-					    
-					    wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
-					    driver.findElement(By.linkText("Close")).click();
-						driver.switchTo().defaultContent();
-						driver.quit();driver = null;
+//						driver.findElement(By.id("modifyCardMessage")).click();
+//						
+//						wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
+//						
+//						
+//						WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
+//						driver.switchTo().frame(iframeSwitch);						
+//						WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
+//						//WebElement MessageArea = driver.findElement(By.cssSelector("tesxtarea[id=\"editgiftmessage\"]"));
+//						
+//						MessageArea.sendKeys(Keys.TAB);
+//						MessageArea.clear();
+//						MessageArea.sendKeys("Testing Automation");
+//						
+//						//driver.switchTo().defaultContent();
+//						driver.findElement(By.xpath("//div/div[2]/div/div/span")).click();
+//						
+//					    driver.findElement(By.id("firstName")).click();
+//					    driver.findElement(By.id("firstName")).clear();
+//					    driver.findElement(By.id("firstName")).sendKeys("tagore");
+//					    driver.findElement(By.id("lastName")).click();
+//					    driver.findElement(By.id("lastName")).clear();
+//					    driver.findElement(By.id("lastName")).sendKeys("gupt");
+//					    driver.findElement(By.id("phoneNumber")).click();
+//					    driver.findElement(By.id("phoneNumber")).clear();
+//					    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
+//					    driver.findElement(By.id("locationType")).click();
+//					    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
+//					    driver.findElement(By.xpath("//option[@value='2']")).click();
+//					    driver.findElement(By.id("company")).click();
+//					    driver.findElement(By.id("company")).clear();
+//					    driver.findElement(By.id("company")).sendKeys("test");
+//					    
+//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div/div/button[2]")).click();
+//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div[2]/button[2]")).click();
+//					    
+//					    wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
+//					    driver.findElement(By.linkText("Close")).click();
+//						driver.switchTo().defaultContent();
+//						driver.quit();
+//						driver = null;
 				    }
 			
 					catch(Exception e)
@@ -113,38 +132,32 @@ public class modifyorder
 					}
 		}
 	
-	@Test
+	//@Test
 	public void ModifyOrder_False() throws Exception 
 	{           
 	           try
 				{
-					//Calling browser and accessing 18F URL
-					callBrowser();
-					deleteCookies();
-					driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
-					WebDriverWait wait = new WebDriverWait(driver, 60);
-					
-					//Click on My Orders, enter order details and click submit
-					driver.findElement(By.linkText("Track Your Order")).click();
-					
-					driver.findElement(By.id("label")).sendKeys("W00995422630853");
-					driver.findElement(By.id("label2")).sendKeys("11514");
-					driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
-					
-					driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
-					
+
 					String ErrorMessage = driver.findElement(By.className("orderNotModifiableErr")).getText();
 					System.out.println("Error message:" + ErrorMessage);
-					if(ErrorMessage.contains("This order may no longer be modified")){System.out.println("Order not modifiable - Passed");}
-					else {System.out.println("Past order modifiable - Failed");}
-					driver.quit();driver = null;
+					if(ErrorMessage.contains("This order may no longer be modified"))
+					{
+						System.out.println("Order not modifiable - Passed");
+					    driver.quit();
+					    driver = null;
+					    System.exit(1);
+					}
+					else 
+					{
+						System.out.println("Past order modifiable - Failed");	
+					}
 			    }
 		
 				catch(Exception e)
 				{
-					e.printStackTrace();
-					System.out.println("error occured");
-					driver.quit();
+					//e.printStackTrace();
+					System.out.println("View/Modify Order Dtails........................");
+					//driver.quit();
 				}
 	}
 
@@ -153,8 +166,6 @@ public class modifyorder
 	           try
 				{
 					//Calling browser and accessing 18F URL
-
-
 			    }
 		
 				catch(Exception e)
@@ -165,16 +176,146 @@ public class modifyorder
 				}
 	}
 	
-
-public void callBrowser()
-{
+	public void checkCardMessage() throws Exception 
+	{           
+	           try
+				{
+					String ErrorMessage = driver.findElement(By.cssSelector("div.confirmmessage")).getText();
+					System.out.println("Car Message: "+ErrorMessage.split("\n")[1]);
+					if(ErrorMessage.contains("test"))
+					{
+						System.out.println("Card Message Existing ---------------------- Passed");
+					}
+					else 
+					{
+						System.out.println("Card Message does not Existing");
+						System.out.println("You could Update the Card Message ......");
+					}
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					//System.out.println("You could Update the Card Message ......");
+				}
+	}
+	
+	public void checkShipAddress() throws Exception 
+	{           
+	           try
+				{
+					String ErrorMessage = driver.findElement(By.cssSelector("div.confirmship")).getText();
+					String[] shippingAddress = ErrorMessage.split("\n");
+					System.out.println("Name:             "+shippingAddress[1]);
+					System.out.println("Shipping Address: "+shippingAddress[2]+" "+shippingAddress[3]);
+					System.out.println("Phone Number:     "+shippingAddress[4]);
+					if(ErrorMessage.contains("St.")){System.out.println("Recipient Info Existing -------------------- Passed");}
+					else {System.out.println("Recipient Info Existing does not existing - Failed");}
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured, Recipient Info DOES NOT EXISTING - Failed");
+					driver.quit();
+				}
+	}
+	
+	public void checkDeliveryDate() throws Exception 
+	{           
+	           try
+				{
+					String ErrorMessage = driver.findElement(By.xpath("//div[@id='Confirm-Wrap']/div[5]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div")).getText();
+					System.out.println("Delivery Date: "+ErrorMessage.replace("\n", "").substring(63,73));
+					if(ErrorMessage.contains("2018")){System.out.println("Delivery Date Existing  -------------------- Passed");}
+					else {System.out.println("Delivery Date does not existing - Failed");}
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured, DELIVERY DATE DOES NOT EXISTING - Failed");
+					driver.quit();
+				}
+	}
+	
+	public void updateAddress() throws Exception 
+	{           
+	           try
+				{
+					// Shipping Address:::::::::
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured, Update Addresss - Failed");
+					driver.quit();
+				}
+	}
+	
+	public void updateMessage() throws Exception 
+	{           
+	           try
+				{
+					driver.findElement(By.id("modifyCardMessage")).click();
+					Thread.sleep(200000);
+					driver.findElement(By.cssSelector("button.btn-cancel.bg-black")).click();
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured, Update Card Message - Failed");
+					driver.quit();
+				}
+	}
+	
+	public void updateDate() throws Exception 
+	{           
+	           try
+				{
+					String ErrorMessage = driver.findElement(By.xpath("//div[@id='Confirm-Wrap']/div[6]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div")).getText();
+					System.out.println("Error message:" + ErrorMessage);
+					if(ErrorMessage.contains("St.")){System.out.println("Shipping Address Existing - Passed");}
+					else {System.out.println("Shipping Address does not existing - Failed");}
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured, SHIPPING ADDRESS DOES NOT EXISTING - Failed");
+					driver.quit();
+				}
+	}
+	
+	public void review() throws Exception 
+	{           
+	           try
+				{
+					String ErrorMessage = driver.findElement(By.cssSelector("div.confirmship")).getText();
+					System.out.println("Error message:" + ErrorMessage);
+					if(ErrorMessage.contains("St.")){System.out.println("Shipping Address Existing - Passed");}
+					else {System.out.println("Shipping Address does not existing - Failed");}
+			    }
+		
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("error occured, SHIPPING ADDRESS DOES NOT EXISTING - Failed");
+					driver.quit();
+				}
+	}
+	
+	public void callBrowser()
+	{
 
 	//########################################################################################################################
 	
 	//#########################################################################################################################
 	
-					/*ProfilesIni profile = new ProfilesIni();
-					FirefoxProfile ffprofile = profile.getProfile("default");*/
+	/*  ProfilesIni profile = new ProfilesIni();
+		FirefoxProfile ffprofile = profile.getProfile("default");*/
 	//	ffprofile.addExtension(new File("path/to/my/firebug.xpi"));							
 	//	FirefoxProfile profile = new FirefoxProfile();
 	//	ffprofile.setPreference("network.proxy.type", 1); //1 for manual proxy, 2 for auto config url
@@ -241,11 +382,12 @@ public void callBrowser()
 	//		Alert alert = wait.until(ExpectedConditions.alertIsPresent());     
 	//		alert.authenticateUsing(new UserAndPassword("cnishant", ""));
 	
-}
+	}
 
-public void deleteCookies() throws InterruptedException
-{driver.manage().deleteAllCookies();}
-
+	public void deleteCookies() throws InterruptedException
+	{
+		driver.manage().deleteAllCookies();	
+	}
 }
 	/*	@After
 		public void tearDown() throws Exception 
