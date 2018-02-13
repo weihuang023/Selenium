@@ -48,19 +48,10 @@ public class modifyorder
 		           try
 					{
 						//Calling browser and accessing 18F URL
+		        	    WebDriverWait wait = new WebDriverWait(driver, 60);
 						callBrowser();
 						deleteCookies();
-						driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
-						WebDriverWait wait = new WebDriverWait(driver, 60);
-						
-						//Click on My Orders, enter order details and click submit
-						driver.findElement(By.linkText("Track Your Order")).click();
-						
-						driver.findElement(By.id("label")).sendKeys("W00995422630853");
-						driver.findElement(By.id("label2")).sendKeys("11514");
-						driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
-						
-						driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
+						goto_Orderdetailspage_Registered("W00995422667594","mmotest@tag.com","tag@123");
 						
 						driver.findElement(By.id("modifyCardMessage")).click();
 						
@@ -124,14 +115,7 @@ public class modifyorder
 					driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
 					WebDriverWait wait = new WebDriverWait(driver, 60);
 					
-					//Click on My Orders, enter order details and click submit
-					driver.findElement(By.linkText("Track Your Order")).click();
-					
-					driver.findElement(By.id("label")).sendKeys("W00995422630853");
-					driver.findElement(By.id("label2")).sendKeys("11514");
-					driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
-					
-					driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
+					goto_Orderdetailspage_Registered("W00995422667510","mmotest@tag.com","tag@123");
 					
 					String ErrorMessage = driver.findElement(By.className("orderNotModifiableErr")).getText();
 					System.out.println("Error message:" + ErrorMessage);
@@ -242,6 +226,48 @@ public void callBrowser()
 	//		alert.authenticateUsing(new UserAndPassword("cnishant", ""));
 	
 }
+
+public void goto_OrderDetails(String user_type, String OrderNumber)
+{
+	switch (user_type){
+		case "GU": driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click(); break;
+		case "PU":
+		case "RU":
+			{
+				WebElement OrderParent = driver.findElement(By.xpath("//div[contains(text(), '"+OrderNumber+"')]/following-sibling::div[2]/form/a/img"));
+			
+			///html/body/div[6]/div[4]/div[1]/div[3]/form/a/img
+			//WebElement NextSibling = OrderParent.findElement(By.cssSelector("alt=\"Order Details\"]"));
+			OrderParent.click();
+			break;
+			}
+}}
+
+public void goto_TrackOrderPage_Guest(String OrderNumber, String Zip_code)
+{
+	//Click on My Orders, enter order details and click submit
+	driver.findElement(By.linkText("Track Your Order")).click();
+	
+	driver.findElement(By.id("label")).sendKeys(OrderNumber);
+	driver.findElement(By.id("label2")).sendKeys(Zip_code);
+	driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
+	
+	
+}
+
+public void goto_Orderdetailspage_Registered(String OrderNumber, String UserName, String Pwd)
+{
+	//Click on My Orders, enter order details and click submit
+	driver.findElement(By.linkText("Track Your Order")).click();
+	
+	driver.findElement(By.id("logonId")).sendKeys(UserName);
+	driver.findElement(By.id("logonPassword")).sendKeys(Pwd);
+	driver.findElement(By.cssSelector("input[alt=\"Sign In\"]")).click();
+	
+	//driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
+	
+}
+
 
 public void deleteCookies() throws InterruptedException
 {driver.manage().deleteAllCookies();}
