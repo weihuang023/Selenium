@@ -42,7 +42,7 @@ public class modifyorder
 		}
 
 	//Start the script 		
-	//@Test
+	@Test
 	public void FPT_ModifyOrder() throws Exception 
 		{           
 		           try
@@ -51,11 +51,11 @@ public class modifyorder
 
 						//String[][] order = {{"W00995422675557","11355"},{"W00995422630853","11514"}};
 						//Calling browser and accessing 18F URL
-		        	    WebDriverWait wait = new WebDriverWait(driver, 60);
+		        	
 						callBrowser();
 						deleteCookies();
 						goto_Orderdetailspage_Registered("W00995422667594","mmotest@tag.com","tag@123");
-						
+					    WebDriverWait wait = new WebDriverWait(driver, 60);
 						driver.findElement(By.id("modifyCardMessage")).click();
 						
 						wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
@@ -112,7 +112,6 @@ public class modifyorder
 	{           
 	           try
 				{
-
 					String ErrorMessage = driver.findElement(By.className("orderNotModifiableErr")).getText();
 					System.out.println("Error message:" + ErrorMessage);
 					if(ErrorMessage.contains("This order may no longer be modified"))
@@ -161,8 +160,8 @@ public class modifyorder
 	
 	//#########################################################################################################################
 	
-					/*ProfilesIni profile = new ProfilesIni();
-					FirefoxProfile ffprofile = profile.getProfile("default");*/
+	/*  ProfilesIni profile = new ProfilesIni();
+		FirefoxProfile ffprofile = profile.getProfile("default");*/
 	//	ffprofile.addExtension(new File("path/to/my/firebug.xpi"));							
 	//	FirefoxProfile profile = new FirefoxProfile();
 	//	ffprofile.setPreference("network.proxy.type", 1); //1 for manual proxy, 2 for auto config url
@@ -210,7 +209,7 @@ public class modifyorder
 	//	
 	//	driver = new FirefoxDriver(ffprofile);
 	//########################################################################################################################
-	System.setProperty("webdriver.chrome.driver", "C:/Selenium Testing 2/chromedriver.exe");
+	System.setProperty("webdriver.chrome.driver", "C:/Users/loadtest/Documents/GitHub/myorder-selenium/modifymyorder/lib/chromedriver.exe");
 	ChromeOptions  options = new ChromeOptions();
 	options.addArguments("start-maximized");
 	driver = new ChromeDriver(options);
