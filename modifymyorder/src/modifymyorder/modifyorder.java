@@ -49,54 +49,66 @@ public class modifyorder
 					{
 		        	   
 
-						//String[][] order = {{"W00995422675557","11355"},{"W00995422630853","11514"}};
+						String[][] order = {{"W00995422675557","11355"},{"W00995422630853","11514"}};
 						//Calling browser and accessing 18F URL
 		        	
 						callBrowser();
 						deleteCookies();
-						goto_Orderdetailspage_Registered("W00995422667594","mmotest@tag.com","tag@123");
+						driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
 					    WebDriverWait wait = new WebDriverWait(driver, 60);
-						driver.findElement(By.id("modifyCardMessage")).click();
+						//goto_Orderdetailspage_Registered("W00995422667594","mmotest@tag.com","tag@123");
+						goto_TrackOrderPage_Guest(order[0][0],order[0][1]);
+						String userType = "GU";
+						goto_OrderDetails(userType,order[0][0]);
+						modifyOrder_False();
+						checkCardMessage();
+						checkDeliveryDate();
+						checkShipAddress();
+						updateMessage();
+						driver.quit();
 						
-						wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
-						
-						
-						WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
-						driver.switchTo().frame(iframeSwitch);						
-						WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
-						//WebElement MessageArea = driver.findElement(By.cssSelector("tesxtarea[id=\"editgiftmessage\"]"));
-						
-						MessageArea.sendKeys(Keys.TAB);
-						MessageArea.clear();
-						MessageArea.sendKeys("Testing Automation");
-						
-						//driver.switchTo().defaultContent();
-						driver.findElement(By.xpath("//div/div[2]/div/div/span")).click();
-						
-	
-					    driver.findElement(By.id("firstName")).click();
-					    driver.findElement(By.id("firstName")).clear();
-					    driver.findElement(By.id("firstName")).sendKeys("tagore");
-					    driver.findElement(By.id("lastName")).click();
-					    driver.findElement(By.id("lastName")).clear();
-					    driver.findElement(By.id("lastName")).sendKeys("gupt");
-					    driver.findElement(By.id("phoneNumber")).click();
-					    driver.findElement(By.id("phoneNumber")).clear();
-					    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
-					    driver.findElement(By.id("locationType")).click();
-					    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
-					    driver.findElement(By.xpath("//option[@value='2']")).click();
-					    driver.findElement(By.id("company")).click();
-					    driver.findElement(By.id("company")).clear();
-					    driver.findElement(By.id("company")).sendKeys("test");
-					    
-					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div/div/button[2]")).click();
-					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div[2]/button[2]")).click();
-					    
-					    wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
-					    driver.findElement(By.linkText("Close")).click();
-						driver.switchTo().defaultContent();
-						driver.quit();driver = null;
+//						driver.findElement(By.id("modifyCardMessage")).click();
+//						
+//						wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
+//						
+//						
+//						WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
+//						driver.switchTo().frame(iframeSwitch);						
+//						WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
+//						//WebElement MessageArea = driver.findElement(By.cssSelector("tesxtarea[id=\"editgiftmessage\"]"));
+//						
+//						MessageArea.sendKeys(Keys.TAB);
+//						MessageArea.clear();
+//						MessageArea.sendKeys("Testing Automation");
+//						
+//						//driver.switchTo().defaultContent();
+//						driver.findElement(By.xpath("//div/div[2]/div/div/span")).click();
+//						
+//	
+//					    driver.findElement(By.id("firstName")).click();
+//					    driver.findElement(By.id("firstName")).clear();
+//					    driver.findElement(By.id("firstName")).sendKeys("tagore");
+//					    driver.findElement(By.id("lastName")).click();
+//					    driver.findElement(By.id("lastName")).clear();
+//					    driver.findElement(By.id("lastName")).sendKeys("gupt");
+//					    driver.findElement(By.id("phoneNumber")).click();
+//					    driver.findElement(By.id("phoneNumber")).clear();
+//					    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
+//					    driver.findElement(By.id("locationType")).click();
+//					    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
+//					    driver.findElement(By.xpath("//option[@value='2']")).click();
+//					    driver.findElement(By.id("company")).click();
+//					    driver.findElement(By.id("company")).clear();
+//					    driver.findElement(By.id("company")).sendKeys("test");
+//					    
+//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div/div/button[2]")).click();
+//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div[2]/button[2]")).click();
+//					    
+//					    wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
+//					    driver.findElement(By.linkText("Close")).click();
+//						driver.switchTo().defaultContent();
+//						driver.quit();
+//						driver = null;
 				    }
 			
 					catch(Exception e)
@@ -108,7 +120,7 @@ public class modifyorder
 		}
 	
 	//@Test
-	public void ModifyOrder_False() throws Exception 
+	public void modifyOrder_False() throws Exception 
 	{           
 	           try
 				{
@@ -123,7 +135,7 @@ public class modifyorder
 					}
 					else 
 					{
-						System.out.println("Past order modifiable - Failed");	
+						System.out.println("Should not Modify Past order - Failed");	
 					}
 			    }
 		
@@ -135,8 +147,7 @@ public class modifyorder
 				}
 	}
 
-
-	public void ModifyOrder_Logo() throws Exception 
+	public void modifyOrder_Logo() throws Exception 
 	{           
 	           try
 				{
@@ -230,49 +241,44 @@ public class modifyorder
 	
     }
 
-public void goto_OrderDetails(String user_type, String OrderNumber)
-{
-	switch (user_type){
-		case "GU": driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click(); break;
-		case "PU":
-		case "RU":
-			{
-				WebElement OrderParent = driver.findElement(By.xpath("//div[contains(text(), '"+OrderNumber+"')]/following-sibling::div[2]/form/a/img"));
-			
-			///html/body/div[6]/div[4]/div[1]/div[3]/form/a/img
-			//WebElement NextSibling = OrderParent.findElement(By.cssSelector("alt=\"Order Details\"]"));
-			OrderParent.click();
-			break;
-			}
-}}
+    public void goto_TrackOrderPage_Guest(String OrderNumber, String Zip_code)
+    {
+    	//Click on My Orders, enter order details and click submit
+    	driver.findElement(By.linkText("Track Your Order")).click();
+    	driver.findElement(By.id("label")).sendKeys(OrderNumber);
+    	driver.findElement(By.id("label2")).sendKeys(Zip_code);
+    	driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
+    }
 
-public void goto_TrackOrderPage_Guest(String OrderNumber, String Zip_code)
-{
-	//Click on My Orders, enter order details and click submit
-	driver.findElement(By.linkText("Track Your Order")).click();
-	
-	driver.findElement(By.id("label")).sendKeys(OrderNumber);
-	driver.findElement(By.id("label2")).sendKeys(Zip_code);
-	driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
-	
-	
-}
+    public void goto_Orderdetailspage_Registered(String OrderNumber, String UserName, String Pwd)
+    {
+	 //Click on My Orders, enter order details and click submit
+	 driver.findElement(By.linkText("Track Your Order")).click();
+	 driver.findElement(By.id("logonId")).sendKeys(UserName);
+	 driver.findElement(By.id("logonPassword")).sendKeys(Pwd);
+	 driver.findElement(By.cssSelector("input[alt=\"Sign In\"]")).click();
+	 //driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();	
+    }
 
-public void goto_Orderdetailspage_Registered(String OrderNumber, String UserName, String Pwd)
-{
-	//Click on My Orders, enter order details and click submit
-	driver.findElement(By.linkText("Track Your Order")).click();
-	
-	driver.findElement(By.id("logonId")).sendKeys(UserName);
-	driver.findElement(By.id("logonPassword")).sendKeys(Pwd);
-	driver.findElement(By.cssSelector("input[alt=\"Sign In\"]")).click();
-	
-	//driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
-	
-}
-
-public void checkCardMessage() throws Exception 
-{           
+    public void goto_OrderDetails(String user_type, String OrderNumber)
+    {
+    		switch (user_type)
+    		{
+				case "GU": driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click(); break;
+				case "PU":
+				case "RU":
+					{
+						WebElement OrderParent = driver.findElement(By.xpath("//div[contains(text(), '"+OrderNumber+"')]/following-sibling::div[2]/form/a/img"));
+						///html/body/div[6]/div[4]/div[1]/div[3]/form/a/img
+					    //WebElement NextSibling = OrderParent.findElement(By.cssSelector("alt=\"Order Details\"]"));
+					    OrderParent.click();
+					    break;
+					}
+    		}	
+    }
+    
+    public void checkCardMessage() throws Exception 
+    {           
            try
 			{
 				String ErrorMessage = driver.findElement(By.cssSelector("div.confirmmessage")).getText();
@@ -287,16 +293,15 @@ public void checkCardMessage() throws Exception
 					System.out.println("You could Update the Card Message ......");
 				}
 		    }
-	
 			catch(Exception e)
 			{
 				e.printStackTrace();
 				//System.out.println("You could Update the Card Message ......");
 			}
-}
+    }
 
-public void checkShipAddress() throws Exception 
-{           
+    public void checkShipAddress() throws Exception 
+    {           
            try
 			{
 				String ErrorMessage = driver.findElement(By.cssSelector("div.confirmship")).getText();
@@ -314,10 +319,10 @@ public void checkShipAddress() throws Exception
 				System.out.println("error occured, Recipient Info DOES NOT EXISTING - Failed");
 				driver.quit();
 			}
-}
+    }
 
-public void checkDeliveryDate() throws Exception 
-{           
+    public void checkDeliveryDate() throws Exception 
+    {           
            try
 			{
 				String ErrorMessage = driver.findElement(By.xpath("//div[@id='Confirm-Wrap']/div[5]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div")).getText();
@@ -332,10 +337,10 @@ public void checkDeliveryDate() throws Exception
 				System.out.println("error occured, DELIVERY DATE DOES NOT EXISTING - Failed");
 				driver.quit();
 			}
-}
+    }
 
-public void updateAddress() throws Exception 
-{           
+    public void updateAddress() throws Exception 
+    {           
            try
 			{
 				// Shipping Address:::::::::
@@ -347,15 +352,19 @@ public void updateAddress() throws Exception
 				System.out.println("error occured, Update Addresss - Failed");
 				driver.quit();
 			}
-}
+    }
 
-public void updateMessage() throws Exception 
-{           
+    public void updateMessage() throws Exception 
+    {           
            try
 			{
 				driver.findElement(By.id("modifyCardMessage")).click();
-				Thread.sleep(200000);
+				Thread.sleep(15000);
 				driver.findElement(By.cssSelector("button.btn-cancel.bg-black")).click();
+				driver.findElement(By.id("modifyCardMessage")).click();
+				Thread.sleep(10000);
+				String message = driver.findElement(By.id("mod_character_count")).getText();
+				System.out.println(message);
 		    }
 	
 			catch(Exception e)
@@ -364,10 +373,10 @@ public void updateMessage() throws Exception
 				System.out.println("error occured, Update Card Message - Failed");
 				driver.quit();
 			}
-}
+    }
 
-public void updateDate() throws Exception 
-{           
+    public void updateDate() throws Exception 
+    {           
            try
 			{
 				String ErrorMessage = driver.findElement(By.xpath("//div[@id='Confirm-Wrap']/div[6]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div")).getText();
@@ -382,10 +391,10 @@ public void updateDate() throws Exception
 				System.out.println("error occured, SHIPPING ADDRESS DOES NOT EXISTING - Failed");
 				driver.quit();
 			}
-}
+    }
 
-public void review() throws Exception 
-{           
+    public void review() throws Exception 
+    {           
            try
 			{
 				String ErrorMessage = driver.findElement(By.cssSelector("div.confirmship")).getText();
@@ -400,11 +409,12 @@ public void review() throws Exception
 				System.out.println("error occured, SHIPPING ADDRESS DOES NOT EXISTING - Failed");
 				driver.quit();
 			}
-}
+    }
 
-public void deleteCookies() throws InterruptedException
-{
-	driver.manage().deleteAllCookies();}
+    public void deleteCookies() throws InterruptedException
+    {
+    	driver.manage().deleteAllCookies();
+    }
 }
 	/*	@After
 		public void tearDown() throws Exception 
