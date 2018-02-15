@@ -99,7 +99,7 @@ public class ModifyOrder
 						String orderNumber = getRowData()[6];
 //						String cardMessage = getRowData()[7];
 //						String deliveryDate = getRowData()[18];
-						String zip = getRowData()[17];
+						String zip = getRowData()[29];
 						///================End of excel code=====///
 						
 					    //WebDriverWait wait = new WebDriverWait(driver, 60);
@@ -118,14 +118,12 @@ public class ModifyOrder
 					    if (userType == "RU"||userType == "PU")
 					    {
 					    	System.out.println("Step 2: Track Order By User Type: " +userType);
-							System.out.println("Step 3: Order#: "+orderNumber+ " Email: "+userName+ " Password: " +pwd);
 							goto_Orderdetailspage_Registered(orderNumber,userName, pwd);
 					    }
 					    else
 					    {
 							System.out.println("Step 2: Track Order by User Type: " +userType);
-							System.out.println("Step 3: Order#: "+orderNumber+ " Zip: "+zip);
-							goto_TrackOrderPage_Guest(orderNumber,zip);	    	
+							goto_TrackOrderPage_Guest(orderNumber,zip);	    
 					    }
 
 
@@ -134,16 +132,42 @@ public class ModifyOrder
 						goto_OrderDetails(userType,orderNumber);
 						
 						modifyOrder_False();
-						//checkCardMessage();
-						//checkDeliveryDate();
-						//checkShipAddress();
-					
+						
+					    String firstName = getRowData()[20];
+		        	    String lastName =  getRowData()[21];
+		        	    String locationType = getRowData()[22];
+		        	    String company = getRowData()[23];
+		        	    String phoneNumber = getRowData()[24];
+		        	    String address1 = getRowData()[25];
+		        	    String address2 = getRowData()[26];
+		        	    String city =  getRowData()[27];
+		        	    String state =  getRowData()[28];
+		        	    String zipcode =  getRowData()[29];
+		        	    
+		        	    System.out.println("+++++++++++++++++++++ Existing Order Details +++++++++++++++++++++++++++++++++");
+		           	    System.out.println("Existing First Name:    "+firstName);
+		        	    System.out.println("Existing Last  Name:    "+lastName);
+		        	    System.out.println("Existing Location Type: "+locationType);
+		        	    System.out.println("Existing Company:  		"+company);
+		        	    System.out.println("Existing Phone Number:  "+phoneNumber);
+		        	    System.out.println("Existing Address1:      "+address1);
+		        	    System.out.println("Existing Address2:      "+address2);
+		        	    System.out.println("Existing City:          "+city);
+		        	    System.out.println("Existing State:         "+state);
+		        	    System.out.println("Existing Zipcode:       "+zipcode);
+		        	    System.out.println("------------------------------------------------------------------------------");
+				
+						
+//						checkCardMessage();
+//						checkDeliveryDate();
+//						checkShipAddress();
+
 						System.out.println("Step 5: Add or Update Message ");
 						updateMessage();
 						System.out.println("Step 9: Update Recipient Information ");
 						updateAddress();
 						
-						review();
+						//review();
 						driver.quit();
 						System.out.println("---------------------------------- Test End ----------------------------------");
 
@@ -282,6 +306,9 @@ public class ModifyOrder
     {
     	//Click on My Orders, enter order details and click submit
     	driver.findElement(By.linkText("Track Your Order")).click();
+		String verifyTitleTrackByNumSignIn = driver.findElement(By.xpath("//div[2]/h1")).getText();
+		System.out.println("Title: "+verifyTitleTrackByNumSignIn);
+		System.out.println("Step 3: Order#: "+ordernumber+ " Zip: "+zipcode);
     	driver.findElement(By.id("label")).sendKeys(ordernumber);
     	driver.findElement(By.id("label2")).sendKeys(zipcode);
     	driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
@@ -291,6 +318,9 @@ public class ModifyOrder
     {
     	//Click on My Orders, enter order details and click submit
     	driver.findElement(By.linkText("Track Your Order")).click();
+		String verifyTitleReturningSignIn = driver.findElement(By.cssSelector("h1")).getText();
+		System.out.println("Title: "+verifyTitleReturningSignIn);
+		System.out.println("Step 3: Order#: "+orderNumber+ " Email: "+userName+ " Password: " +pwd);
     	driver.findElement(By.id("logonId")).sendKeys(userName);
     	driver.findElement(By.id("logonPassword")).sendKeys(pwd);
     	driver.findElement(By.cssSelector("input[alt=\"Sign In\"]")).click();
@@ -335,9 +365,9 @@ public class ModifyOrder
     {           
            try
 			{
-				String ErrorMessage = driver.findElement(By.cssSelector("div.confirmmessage")).getText();
-				System.out.println("Card Message: "+ErrorMessage.split("\n")[1]);
-				if(ErrorMessage.contains("No Card Message"))
+				String cardMessage = driver.findElement(By.cssSelector("div.confirmmessage")).getText();
+				System.out.println("Card Message: "+cardMessage.split("\n")[1]);
+				if(cardMessage.contains("No Card Message"))
 				{
 					System.out.println("Card Message does not Existing");
 					System.out.println("You could Update the Card Message ......");
@@ -357,12 +387,12 @@ public class ModifyOrder
     {           
            try
 			{
-				String ErrorMessage = driver.findElement(By.cssSelector("div.confirmship")).getText();
-				String[] shippingAddress = ErrorMessage.split("\n");
+				String address = driver.findElement(By.cssSelector("div.confirmship")).getText();
+				String[] shippingAddress = address.split("\n");
 				System.out.println("Name:             "+shippingAddress[1]);
-				System.out.println("Shipping Address: "+shippingAddress[2]+" "+shippingAddress[3]);
+				System.out.println("Address: "+shippingAddress[2]+" "+shippingAddress[3]);
 				System.out.println("Phone Number:     "+shippingAddress[4]);
-				if(ErrorMessage.contains("St."))
+				if(address.contains("St."))
 				{
 					System.out.println("Recipient Info Existing -------------------- Passed");
 				}
@@ -384,9 +414,9 @@ public class ModifyOrder
     {           
            try
 			{
-				String ErrorMessage = driver.findElement(By.xpath("//div[@id='Confirm-Wrap']/div[5]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div")).getText();
-				System.out.println("Delivery Date: "+ErrorMessage.replace("\n", "").substring(63,73));
-				if(ErrorMessage.contains("2018")){System.out.println("Delivery Date Existing  -------------------- Passed");}
+				String deliveryDate = driver.findElement(By.xpath("//div[@id='Confirm-Wrap']/div[5]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div")).getText();
+				System.out.println("Delivery Date: "+deliveryDate.replace("\n", "").substring(63,73));
+				if(deliveryDate.contains("2018")){System.out.println("Delivery Date Existing  -------------------- Passed");}
 				else {System.out.println("Delivery Date does not existing - Failed");}
 		    }
 	
@@ -475,6 +505,7 @@ public class ModifyOrder
         	    System.out.println("Init City:          "+initCity);
         	    System.out.println("Init State:         "+initState);
         	    System.out.println("Init Zipcode:       "+initZipcode);
+        	    System.out.println("--------------------------------------------------------");
         	    
         	    System.out.println("++++++++++ Update New Recipient Info +++++++++++++++++");
                 System.out.println("Enter New First Name     :" +firstName);
@@ -526,6 +557,8 @@ public class ModifyOrder
                 driver.findElement(By.id("zipCode")).clear();
                 driver.findElement(By.id("zipCode")).sendKeys(zipcode); 
                 
+                System.out.println("------------------------------------------------------------------------------");
+                
 		    }
 			catch(Exception e)
 			{
@@ -539,6 +572,7 @@ public class ModifyOrder
     {           
            try
 			{
+        	    //String deliveryDate =  getRowData()[18];
         	   //Delivery date update
 		    }
 	
@@ -580,6 +614,7 @@ public class ModifyOrder
 				System.out.println("City		   :"+updateCity);
 				System.out.println("State		   :"+updateState);
 				System.out.println("Zipcode		   :"+updateZipcode);
+				System.out.println("---------------------------------------------------");
 				System.out.println("Step 11: Submit Change ");
 				driver.findElement(By.cssSelector("button.btn-submit.bg-brandColor-primary")).click();
 				wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("h1.txt_hdr-xl.txt_align-center"))));
@@ -597,8 +632,10 @@ public class ModifyOrder
 				WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
 				driver.switchTo().frame(iframeSwitch);						
 				wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("p.txt_base.txt_align-center"))));
-				String pendingQueueMessage = driver.findElement(By.cssSelector("p.txt_base.txt_align-center")).getText();
+				String pendingQueueMessage = driver.findElement(By.cssSelector("h1.txt_hdr-xl.txt_align-center")).getText();
+				String pendingQueueMessage1 = driver.findElement(By.cssSelector("p.txt_base.txt_align-center")).getText();
 				System.out.println(pendingQueueMessage);
+				System.out.println(pendingQueueMessage1);
 		    }
 	
 			catch(Exception e)

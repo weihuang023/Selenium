@@ -1,13 +1,13 @@
-S.No,RunStatus,Brand,User type,UserName,Pwd,OrderNumber,CardMessage,FirstName,LastName,Location,Company,PhoneNumber,Add1,Add2,City,State,Zip,Deliverydate,Result,Comments
-1,,18F,GU,,,W00995422678559,AAA,tangore,gupt,Residence,,3453453454,1 old country rd.,ste 500,Carle Place,NY,11355,5/14/2018,,
-2,,18F,GU,,,W00995422678505,No,Wei,Huang,Residence,,9173318880,1 Main st.,,Flushing,NY,11355,5/14/2018,,
-3,,18B,PU,,,,,,,,,,,,,,,,,
-4,,FBQ,GU,,,,,,,,,,,,,,,,,
-5,,FBQ,RU,,,,,,,,,,,,,,,,,
-6,,SC,PU,,,,,,,,,,,,,,,,,
-7,,CCO,GU,,,,,,,,,,,,,,,,,
-8,,TPF,RU,,,,,,,,,,,,,,,,,
-9,,PU,PU,,,,,,,,,,,,,,,,,
-10,,HD,GU,,,,,,,,,,,,,,,,,
-11,,WF,RU,,,,,,,,,,,,,,,,,
-12,,SY,PU,,,,,,,,,,,,,,,,,
+S.No,RunStatus,Brand,User type,UserName,Pwd,NewOrderNumber,NewCardMessage,NewFirstName,NewLastName,NewLocation,NewCompany,NewPhoneNumber,NewAdd1,NewAdd2,NewCity,NewState,NewZip,Deliverydate,CardMessage,FirstName,LastName,Location,Company,PhoneNumber,Add1,Add2,City,State,Zip,Deliverydate
+1,,18F,GU,,,W00995422678559,Automation Test Card Message,tangore,gupt,Residence,Test,3453453454,1 old country rd.,ste 500,Carle Place,NY,11514,5/14/2018,,Wei,Huang,Residence,,9173318880,1 Main st.,,Flushing,NY,11355,5/4/2018
+2,,18F,GU,,,W00995422678505,,Wei,Huang,Residence,,9173318880,1 Main st.,,Flushing,NY,11355,5/14/2018,,Wei,Huang,Residence,,9173318880,1 Main st.,,Flushing,NY,11355,5/4/2018
+3,,18B,PU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+4,,FBQ,GU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+5,,FBQ,RU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6,,SC,PU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+7,,CCO,GU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8,,TPF,RU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9,,PU,PU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+10,,HD,GU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+11,,WF,RU,,,,,,,,,,,,,,,,,,,,,,,,,,,
+12,,SY,PU,,,,,,,,,,,,,,,,,,,,,,,,,,,
