@@ -1,11 +1,11 @@
-package modifymyorder; 
+package modifyMyOrder; 
 //Created By Tagore 1/12/18
 import java.io.FileWriter;
-import java.io.IOException;
-import java.math.BigDecimal;
+//import java.io.IOException;
+//import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +56,7 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class modifyorder 
+public class ModifyOrder 
 {
 	//variables declaration goes here
 	public WebDriver driver;
@@ -65,7 +65,8 @@ public class modifyorder
 	public SimpleDateFormat formatter=  new SimpleDateFormat("yyyy_MMM_dd HH_mm_ss");
 	public String[] DatatoWrite = new String[30];
 	ArrayList<String> ReadCsv = new ArrayList<String>();
-	String FilePath = "C:/Selenium Testing 2/eclipse/myorder-selenium/";
+	String FilePath = "C:/Users/loadtest/Documents/GitHub/myorder-selenium/";
+	//String FilePath = "C:/Selenium Testing 2/eclipse/myorder-selenium/";
 	String ResultPath;
 	
 	
@@ -74,7 +75,6 @@ public class modifyorder
 		{
 			setFramework();
 			ReadCsv = readCsv(FilePath+"ModifyMyOrder.csv");
-		
 		}
 
 	//Start the script 		
@@ -82,39 +82,27 @@ public class modifyorder
 	public void FPT_ModifyOrder() throws Exception 
 		{           
 		   for(int i=1;i<=1;i++)
-		   {
-			   
+		   {   
 				try 
 				{	
-					setRowData(ReadCsv.get(i).split(","));
+						setRowData(ReadCsv.get(i).split(","));
 				
-					if(getRowData()[2].equals("Done"))	{System.out.println("Test"+i +" Done, skipping");continue;}
-					datatowrite(i);
-	        		resetValues();
-					//Calling browser and accessing 18F URL
-	        	
-					callBrowser();
-					deleteCookies();
-					driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
+						if(getRowData()[2].equals("Done"))	{System.out.println("Test"+i +" Done, skipping");continue;}
+						datatowrite(i);
+	        			resetValues();
 					
-					///************Read Excel**************///
-					String Brand = getRowData()[2];
-					String UserType = getRowData()[3];
-					String UserName = getRowData()[4];
-					String Pwd = getRowData()[5];
-					String OrderNumber = getRowData()[6];
-					String CardMessage = getRowData()[7];
-					String DeliveryDate = getRowData()[18];
-					String Zip = getRowData()[17];
-					///================End of excel code=====///
-					
-					
-				    WebDriverWait wait = new WebDriverWait(driver, 60);
-				    if (UserType == "RU"||UserType == "PU"){goto_Orderdetailspage_Registered(OrderNumber,UserName, Pwd);}
-				    else{goto_TrackOrderPage_Guest(OrderNumber,Zip);}
-
-<<<<<<< HEAD
-						String[][] order = {{"W00995422678505","11355"},{"W00995422675557","11355"},{"W00995422630853","11514"}};
+						///************Read Excel**************///
+//						String brand = getRowData()[2];
+						String userType = getRowData()[3];
+						String userName = getRowData()[4];
+						String pwd = getRowData()[5];
+						String orderNumber = getRowData()[6];
+//						String cardMessage = getRowData()[7];
+//						String deliveryDate = getRowData()[18];
+						String zip = getRowData()[17];
+						///================End of excel code=====///
+						
+					    //WebDriverWait wait = new WebDriverWait(driver, 60);
 						//Calling browser and accessing 18F URL
 		        	
 						callBrowser();
@@ -123,83 +111,43 @@ public class modifyorder
 						System.out.println("Step 1: Go To the Home Page ");
 						driver.get("https://akamai.1800flowers-uat.net");
 						Thread.sleep(1000);
-					    //WebDriverWait wait = new WebDriverWait(driver, 60);
-						//goto_Orderdetailspage_Registered("W00995422667594","mmotest@tag.com","tag@123");
-						
-						String userType = "GU";
+
+						//String userType = "GU";
 						//String userType = "RU";
-						if (userType == "GU")
-						{
-							System.out.println("Step 2: Track Order by User Type " +userType);
-							System.out.println("Step 3: Enter Order#:  "+order[0][0]+ " Zip: "+order[0][1]);
-							goto_TrackOrderPage_Guest(order[0][0],order[0][1]);
-						}
-						else
-						{
-							System.out.println("Step 2: Track Order By User Type " +userType);
-							System.out.println("Step 3: Order "+order[0][0]+ " Email "+order[0][1]+ " Password ");
-						}
+						
+					    if (userType == "RU"||userType == "PU")
+					    {
+					    	System.out.println("Step 2: Track Order By User Type: " +userType);
+							System.out.println("Step 3: Order#: "+orderNumber+ " Email: "+userName+ " Password: " +pwd);
+							goto_Orderdetailspage_Registered(orderNumber,userName, pwd);
+					    }
+					    else
+					    {
+							System.out.println("Step 2: Track Order by User Type: " +userType);
+							System.out.println("Step 3: Order#: "+orderNumber+ " Zip: "+zip);
+							goto_TrackOrderPage_Guest(orderNumber,zip);	    	
+					    }
+
+
 						
 						System.out.println("Step 4: View/Modify Order Details ");
-						goto_OrderDetails(userType,order[0][0]);
+						goto_OrderDetails(userType,orderNumber);
 						
 						modifyOrder_False();
-//						checkCardMessage();
-//						checkDeliveryDate();
-//						checkShipAddress();
+						//checkCardMessage();
+						//checkDeliveryDate();
+						//checkShipAddress();
 					
 						System.out.println("Step 5: Add or Update Message ");
 						updateMessage();
-						System.out.println("Step 8: Update Recipient Information ");
+						System.out.println("Step 9: Update Recipient Information ");
 						updateAddress();
 						
 						review();
 						driver.quit();
 						System.out.println("---------------------------------- Test End ----------------------------------");
-						
-//						driver.findElement(By.id("modifyCardMessage")).click();
-//						
-//						wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
-//						
-//						
-//						WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
-//						driver.switchTo().frame(iframeSwitch);						
-//						WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
-//						//WebElement MessageArea = driver.findElement(By.cssSelector("tesxtarea[id=\"editgiftmessage\"]"));
-//						
-//						MessageArea.sendKeys(Keys.TAB);
-//						MessageArea.clear();
-//						MessageArea.sendKeys("Testing Automation");
-//						
-//						//driver.switchTo().defaultContent();
-//						driver.findElement(By.xpath("//div/div[2]/div/div/span")).click();
-//						
-//	
-//					    driver.findElement(By.id("firstName")).click();
-//					    driver.findElement(By.id("firstName")).clear();
-//					    driver.findElement(By.id("firstName")).sendKeys("tagore");
-//					    driver.findElement(By.id("lastName")).click();
-//					    driver.findElement(By.id("lastName")).clear();
-//					    driver.findElement(By.id("lastName")).sendKeys("gupt");
-//					    driver.findElement(By.id("phoneNumber")).click();
-//					    driver.findElement(By.id("phoneNumber")).clear();
-//					    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
-//					    driver.findElement(By.id("locationType")).click();
-//					    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
-//					    driver.findElement(By.xpath("//option[@value='2']")).click();
-//					    driver.findElement(By.id("company")).click();
-//					    driver.findElement(By.id("company")).clear();
-//					    driver.findElement(By.id("company")).sendKeys("test");
-//					    
-//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div/div/button[2]")).click();
-//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div[2]/button[2]")).click();
-//					    
-//					    wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
-//					    driver.findElement(By.linkText("Close")).click();
-//						driver.switchTo().defaultContent();
-//						driver.quit();
-//						driver = null;
-				    }
+
+				}
 			
 					catch(Exception e)
 					{
@@ -207,74 +155,9 @@ public class modifyorder
 						System.out.println("error occured");
 						driver.quit();
 					}
-		}
-=======
-					goto_OrderDetails(UserType, OrderNumber);
-					//modifyOrder_False();
-					//checkCardMessage();
-					//checkDeliveryDate();
-					//checkShipAddress();
-					//updateMessage();
-					updateAddress();
-					driver.quit();
-					
-	//						driver.findElement(By.id("modifyCardMessage")).click();
-	//						
-	//						wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
-	//						
-	//						
-	//						WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
-	//						driver.switchTo().frame(iframeSwitch);						
-	//						WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
-	//						//WebElement MessageArea = driver.findElement(By.cssSelector("tesxtarea[id=\"editgiftmessage\"]"));
-	//						
-	//						MessageArea.sendKeys(Keys.TAB);
-	//						MessageArea.clear();
-	//						MessageArea.sendKeys("Testing Automation");
-	//						
-	//						//driver.switchTo().defaultContent();
-	//						driver.findElement(By.xpath("//div/div[2]/div/div/span")).click();
-	//						
-	//	
-	//					    driver.findElement(By.id("firstName")).click();
-	//					    driver.findElement(By.id("firstName")).clear();
-	//					    driver.findElement(By.id("firstName")).sendKeys("tagore");
-	//					    driver.findElement(By.id("lastName")).click();
-	//					    driver.findElement(By.id("lastName")).clear();
-	//					    driver.findElement(By.id("lastName")).sendKeys("gupt");
-	//					    driver.findElement(By.id("phoneNumber")).click();
-	//					    driver.findElement(By.id("phoneNumber")).clear();
-	//					    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
-	//					    driver.findElement(By.id("locationType")).click();
-	//					    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
-	//					    driver.findElement(By.xpath("//option[@value='2']")).click();
-	//					    driver.findElement(By.id("company")).click();
-	//					    driver.findElement(By.id("company")).clear();
-	//					    driver.findElement(By.id("company")).sendKeys("test");
-	//					    
-	//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div/div/button[2]")).click();
-	//					    driver.findElement(By.xpath("//div[@id='mod_ajaxContent']/div[2]/div[2]/button[2]")).click();
-	//					    
-	//					    wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
-	//					    driver.findElement(By.linkText("Close")).click();
-	//						driver.switchTo().defaultContent();
-	//						driver.quit();
-	//						driver = null;
 		   }
-				catch(Exception e)
-				{
-					e.printStackTrace();
-					System.out.println("error occured");
-					driver.quit();
-				}
-		    }
-				
-		   }
-	
-					
-		
->>>>>>> 14c6bb816a70aa9d18c7edbf04e9383d3bedcb4d
-	
+	}
+
 	//@Test
 	public void modifyOrder_False() throws Exception 
 	{           
@@ -395,37 +278,54 @@ public class modifyorder
 	
     }
 
-    public void goto_TrackOrderPage_Guest(String OrderNumber, String Zip_code)
+    public void goto_TrackOrderPage_Guest(String ordernumber, String zipcode)
     {
     	//Click on My Orders, enter order details and click submit
     	driver.findElement(By.linkText("Track Your Order")).click();
-    	driver.findElement(By.id("label")).sendKeys(OrderNumber);
-    	driver.findElement(By.id("label2")).sendKeys(Zip_code);
+    	driver.findElement(By.id("label")).sendKeys(ordernumber);
+    	driver.findElement(By.id("label2")).sendKeys(zipcode);
     	driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
     }
 
-    public void goto_Orderdetailspage_Registered(String OrderNumber, String UserName, String Pwd)
+    public void goto_Orderdetailspage_Registered(String orderNumber, String userName, String pwd)
     {
-	 //Click on My Orders, enter order details and click submit
-	 driver.findElement(By.linkText("Track Your Order")).click();
-	 driver.findElement(By.id("logonId")).sendKeys(UserName);
-	 driver.findElement(By.id("logonPassword")).sendKeys(Pwd);
-	 driver.findElement(By.cssSelector("input[alt=\"Sign In\"]")).click();
-	 //driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();	
+    	//Click on My Orders, enter order details and click submit
+    	driver.findElement(By.linkText("Track Your Order")).click();
+    	driver.findElement(By.id("logonId")).sendKeys(userName);
+    	driver.findElement(By.id("logonPassword")).sendKeys(pwd);
+    	driver.findElement(By.cssSelector("input[alt=\"Sign In\"]")).click();
+    	//driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();	
     }
 
-    public void goto_OrderDetails(String user_type, String OrderNumber)
+    public void goto_OrderDetails(String userType, String orderNumber)
     {
-    		switch (user_type)
+    		switch (userType)
     		{
-				case "GU": driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click(); break;
+				case "GU": 
+					try
+					{
+						driver.findElement(By.cssSelector("img[alt=\"Order Details\"]")).click();
+					}
+					catch (Exception e)
+					{
+						String ErrorMessage = driver.findElement(By.cssSelector("span.errortxt")).getText();
+						if(ErrorMessage.contains("Unable to obtain"))
+						{
+							System.out.println("Error:" + ErrorMessage);
+						    driver.quit();
+						    driver = null;
+						    System.out.println("---------------------------------- Test End    --------------------------------");
+						    System.exit(1);
+						}
+					}
+					break;
 				case "PU":
 				case "RU":
 					{
-						WebElement OrderParent = driver.findElement(By.xpath("//div[contains(text(), '"+OrderNumber+"')]/following-sibling::div[2]/form/a/img"));
+						WebElement orderParent = driver.findElement(By.xpath("//div[contains(text(), '"+orderNumber+"')]/following-sibling::div[2]/form/a/img"));
 						///html/body/div[6]/div[4]/div[1]/div[3]/form/a/img
 					    //WebElement NextSibling = OrderParent.findElement(By.cssSelector("alt=\"Order Details\"]"));
-					    OrderParent.click();
+					    orderParent.click();
 					    break;
 					}
     		}	
@@ -462,8 +362,14 @@ public class modifyorder
 				System.out.println("Name:             "+shippingAddress[1]);
 				System.out.println("Shipping Address: "+shippingAddress[2]+" "+shippingAddress[3]);
 				System.out.println("Phone Number:     "+shippingAddress[4]);
-				if(ErrorMessage.contains("St.")){System.out.println("Recipient Info Existing -------------------- Passed");}
-				else {System.out.println("Recipient Info Existing does not existing - Failed");}
+				if(ErrorMessage.contains("St."))
+				{
+					System.out.println("Recipient Info Existing -------------------- Passed");
+				}
+				else 
+				{
+					System.out.println("Recipient Info Existing does not existing - Failed");
+				}
 		    }
 	
 			catch(Exception e)
@@ -492,21 +398,62 @@ public class modifyorder
 			}
     }
 
+    public void updateMessage() throws Exception 
+    {           
+           try
+			{
+				driver.findElement(By.id("modifyCardMessage")).click();
+				WebDriverWait wait = new WebDriverWait(driver, 60);
+				wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
+				
+				WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
+				driver.switchTo().frame(iframeSwitch);						
+				WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
+				String message = MessageArea.getText();
+				String characterCount =  driver.findElement(By.id("mod_character_count")).getText();
+				System.out.println("Init Mess  on Modify My Order: "+message);
+				System.out.println("Init Count on Modify My Order: "+characterCount);
+				
+				System.out.println("Step 6: Continue Modify My Order");
+				Thread.sleep(3000);
+				driver.findElement(By.cssSelector("button.btn-continue.bg-brandColor-primary")).click();
+				String warnMessage = driver.findElement(By.cssSelector("div.warning-dialogue")).getText();
+				System.out.println("Warning: "+warnMessage);
+
+				System.out.println("Step 7: Update New Card Message");
+				MessageArea.sendKeys(Keys.TAB);
+				MessageArea.clear();
+				String newCardMessage = getRowData()[7];
+				MessageArea.sendKeys(newCardMessage);
+				String message1 = MessageArea.getText();
+				String characterCount1 =  driver.findElement(By.id("mod_character_count")).getText();
+				System.out.println("New Mess  on Modify My Order: "+message1);
+				System.out.println("New Count on Modify My Order: "+characterCount1);
+				
+		    }
+	
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				System.out.println("error occured, Update Card Message - Failed");
+				driver.quit();
+			}
+    }
+    
     public void updateAddress() throws Exception 
     {           
            try
 			{
-<<<<<<< HEAD
-        	    String firstName = "tangore";
-        	    String lastName = "gupt";
-        	    String phoneNumber = "3453453454";
-        	    String locationType = "Business";
-        	    String address1 = "1 old country rd";
-        	    String company = "test";
-        	    String address2 = "ste 500";
-        	    String city = "Carle Place";
-        	    String state = "NY";
-        	    String zipcode = "11514";
+        	    String firstName = getRowData()[8];
+        	    String lastName =  getRowData()[9];
+        	    String locationType = getRowData()[10];
+        	    String company = getRowData()[11];
+        	    String phoneNumber = getRowData()[12];
+        	    String address1 = getRowData()[13];
+        	    String address2 = getRowData()[14];
+        	    String city =  getRowData()[15];
+        	    String state =  getRowData()[16];
+        	    String zipcode =  getRowData()[17];
         	    
         	    driver.findElement(By.xpath("//div[contains(text(), 'Update Recipient Details')]")).click();
         	    Thread.sleep(3000);
@@ -578,48 +525,7 @@ public class modifyorder
                 driver.findElement(By.id("zipCode")).click();
                 driver.findElement(By.id("zipCode")).clear();
                 driver.findElement(By.id("zipCode")).sendKeys(zipcode); 
-=======
-				// Shipping Address:::::::::
-        	   driver.findElement(By.id("modifyCardMessage")).click();
-        	   WebDriverWait wait = new WebDriverWait(driver, 60);
-        	   wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
-        	   WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
-				driver.switchTo().frame(iframeSwitch);	
-        	   driver.findElement(By.xpath("//div[contains(text(), 'Update Recipient Details')]")).click();
-        	   
-        	   
-        	   driver.findElement(By.id("firstName")).click();
-			    driver.findElement(By.id("firstName")).clear();
-			    driver.findElement(By.id("firstName")).sendKeys("tagore");
-			    driver.findElement(By.id("lastName")).click();
-			    driver.findElement(By.id("lastName")).clear();
-			    driver.findElement(By.id("lastName")).sendKeys("gupt");
-			    driver.findElement(By.id("phoneNumber")).click();
-			    driver.findElement(By.id("phoneNumber")).clear();
-			    driver.findElement(By.id("phoneNumber")).sendKeys("3453453454"); 	
-			    driver.findElement(By.id("locationType")).click();
-			    new Select(driver.findElement(By.id("locationType"))).selectByVisibleText("Business");
-			    driver.findElement(By.xpath("//option[@value='2']")).click();
-			    driver.findElement(By.id("company")).click();
-			    driver.findElement(By.id("company")).clear();
-			    driver.findElement(By.id("company")).sendKeys("test");
-			    
-			    driver.findElement(By.id("addressLine1")).click();
-			    driver.findElement(By.id("addressLine1")).clear();
-			    driver.findElement(By.id("addressLine1")).sendKeys("1 old country rd");
-			    driver.findElement(By.id("addressLine2")).click();
-			    driver.findElement(By.id("addressLine2")).clear();
-			    driver.findElement(By.id("addressLine2")).sendKeys("ste 500");
-			    driver.findElement(By.id("cityName")).click();
-			    driver.findElement(By.id("cityName")).clear();
-			    driver.findElement(By.id("cityName")).sendKeys("Carle Place"); 
-				
-			    driver.findElement(By.id("state")).click();
-			    new Select(driver.findElement(By.id("state"))).selectByValue("New York");
-			    driver.findElement(By.id("zipCode")).click();
-			    driver.findElement(By.id("zipCode")).clear();
-			    driver.findElement(By.id("zipCode")).sendKeys("11514"); 
->>>>>>> 14c6bb816a70aa9d18c7edbf04e9383d3bedcb4d
+                
 		    }
 			catch(Exception e)
 			{
@@ -629,49 +535,6 @@ public class modifyorder
 			}
     }
 
-    public void updateMessage() throws Exception 
-    {           
-           try
-			{
-				driver.findElement(By.id("modifyCardMessage")).click();
-				WebDriverWait wait = new WebDriverWait(driver, 60);
-				wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
-				
-				WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
-				driver.switchTo().frame(iframeSwitch);						
-				WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
-				String message = MessageArea.getText();
-				String characterCount =  driver.findElement(By.id("mod_character_count")).getText();
-				System.out.println("Init Mess  on Modify My Order: "+message);
-				System.out.println("Init Count on Modify My Order: "+characterCount);
-				
-				System.out.println("Step 6: Continue Modify My Order");
-				Thread.sleep(3000);
-				driver.findElement(By.cssSelector("button.btn-continue.bg-brandColor-primary")).click();
-				String warnMessage = driver.findElement(By.cssSelector("div.warning-dialogue")).getText();
-				System.out.println("Warning: "+warnMessage);
-
-				System.out.println("Step 7: Update New Card Message");
-				MessageArea.sendKeys(Keys.TAB);
-				MessageArea.clear();
-				String newCardMessage = "Test Automation 2000000000000000000000";
-				MessageArea.sendKeys(newCardMessage);
-				String message1 = MessageArea.getText();
-				String characterCount1 =  driver.findElement(By.id("mod_character_count")).getText();
-				System.out.println("New Mess  on Modify My Order: "+message1);
-				System.out.println("New Count on Modify My Order: "+characterCount1);
-				
-		    }
-	
-			catch(Exception e)
-			{
-				e.printStackTrace();
-				System.out.println("error occured, Update Card Message - Failed");
-				driver.quit();
-			}
-    }
-    
-    
     public void updateDate() throws Exception 
     {           
            try
@@ -692,10 +555,10 @@ public class modifyorder
            try
 			{
        		    WebDriverWait wait = new WebDriverWait(driver, 60);
-				System.out.println("Step 8: Continue Modify My Order Again");
+				System.out.println("Step 9: Continue Modify My Order Again");
 				driver.findElement(By.cssSelector("button.btn-continue.bg-brandColor-primary")).click();
 				Thread.sleep(3000);
-				System.out.println("Step 9: Verify Updated Card Message/Addresses ");
+				System.out.println("Step 10: Verify Updated Card Message/Addresses ");
 				String updateMessage = driver.findElement(By.xpath("//div[2]/div[2]/div[2]/div/p")).getText();
 				String updateName = driver.findElement(By.xpath("//div[3]/div/p")).getText();
 				String updatePhone = driver.findElement(By.xpath("//p[2]")).getText();
@@ -717,7 +580,7 @@ public class modifyorder
 				System.out.println("City		   :"+updateCity);
 				System.out.println("State		   :"+updateState);
 				System.out.println("Zipcode		   :"+updateZipcode);
-				System.out.println("Step 10: Submit Change ");
+				System.out.println("Step 11: Submit Change ");
 				driver.findElement(By.cssSelector("button.btn-submit.bg-brandColor-primary")).click();
 				wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("h1.txt_hdr-xl.txt_align-center"))));
 				String thankYouMessage = driver.findElement(By.cssSelector("h1.txt_hdr-xl.txt_align-center")).getText();
@@ -726,7 +589,7 @@ public class modifyorder
 				System.out.println(thankYouMessage1);
 				wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
 				driver.findElement(By.linkText("Close")).click();
-				System.out.println("Step 11: Verify Pending Queue Message After Submit Change ");
+				System.out.println("Step 12: Verify Pending Queue Message After Submit Change ");
 				driver.switchTo().defaultContent();
 				Thread.sleep(15000);
 				driver.findElement(By.id("modifyCardMessage")).click();
@@ -745,15 +608,12 @@ public class modifyorder
 				driver.quit();
 			}
     }
-    
 
     public void deleteCookies() throws InterruptedException
     {
     	driver.manage().deleteAllCookies();
     }
 
-<<<<<<< HEAD
-=======
     public void setFramework() throws Exception
 	{
 		//get current date in proper format
@@ -790,15 +650,15 @@ public class modifyorder
 			}	
 	
 	public void writecsvHeader(int size) throws Exception
-	{//S.No	RunStatus	Brand	User type	UserName	pwd	
+	{   //S.No	RunStatus	Brand	User type	UserName	Pwd	
 		//OrderNumber	CardMessage	FirstName	LastName	Location	Company	PhoneNumber	Add1	
-		//Add2	city	state	zip	Deliverydate	Result	Comments
+		//Add2	City	State	Zip	Deliverydate	Result	Comments
 
 		String[] Header = new String[size];
 		Header[0]="S.No";
 		Header[1]="RunStatus";
 		Header[2]="Brand";
-		Header[3]="User type";
+		Header[3]="Usertype";
 		Header[4]="OrderNumber";
 		Header[5]="CardMessage";
 		Header[6]="New FirstName";
@@ -808,9 +668,9 @@ public class modifyorder
 		Header[10]="PhoneNumber";
 		Header[11]="Add1";
 		Header[12]="Add2";
-		Header[13]="city";
-		Header[14]="state";
-		Header[15]="zip";
+		Header[13]="City";
+		Header[14]="State";
+		Header[15]="Zip";
 		Header[16]="Deliverydate";
 		Header[17]="Result";
 		Header[18]="Comments";
@@ -827,26 +687,24 @@ public class modifyorder
 	public void datatowrite(int iteration)
 	{
 		DatatoWrite[1] = Integer.toString(iteration);
-		DatatoWrite[2] = getRowData()[1];  //TC no
-		DatatoWrite[3] = getRowData()[2];  // Run Status
-	    DatatoWrite[4] = getRowData()[3];  // Brad
-	    DatatoWrite[5] = getRowData()[4];  // User Type
-	    DatatoWrite[6] = getRowData()[5];  // User Name
-	    DatatoWrite[7] = getRowData()[6];  //pwd
-	    DatatoWrite[8] = getRowData()[7];  //OrderNumber
-	    DatatoWrite[9] = getRowData()[8];  // CardMessage
-	    DatatoWrite[10] = getRowData()[9];  //FirstName
-	    DatatoWrite[11] = getRowData()[10];  //LastName
-	    DatatoWrite[12] = getRowData()[11];  // Location
-	    DatatoWrite[13] = getRowData()[12];  // Company
-	    DatatoWrite[14] = getRowData()[13];  //PhoneNumber
-	    DatatoWrite[15] = getRowData()[14];  //add 1
-	    DatatoWrite[16] = getRowData()[15];  // add 2
-	    DatatoWrite[17] = getRowData()[16];  //city
-	    DatatoWrite[18] = getRowData()[17];  //state
-	    DatatoWrite[19] = getRowData()[18];  // zip
-	    
-	    
+		DatatoWrite[2] = getRowData()[1];   // TC no
+		DatatoWrite[3] = getRowData()[2];   // Run Status
+	    DatatoWrite[4] = getRowData()[3];   // Brand
+	    DatatoWrite[5] = getRowData()[4];   // User Type
+	    DatatoWrite[6] = getRowData()[5];   // User Name
+	    DatatoWrite[7] = getRowData()[6];   // Pwd
+	    DatatoWrite[8] = getRowData()[7];   // OrderNumber
+	    DatatoWrite[9] = getRowData()[8];   // CardMessage
+	    DatatoWrite[10] = getRowData()[9];  // FirstName
+	    DatatoWrite[11] = getRowData()[10]; // LastName
+	    DatatoWrite[12] = getRowData()[11]; // Location
+	    DatatoWrite[13] = getRowData()[12]; // Company
+	    DatatoWrite[14] = getRowData()[13]; // PhoneNumber
+	    DatatoWrite[15] = getRowData()[14]; // Add 1
+	    DatatoWrite[16] = getRowData()[15]; // Add 2
+	    DatatoWrite[17] = getRowData()[16]; // City
+	    DatatoWrite[18] = getRowData()[17]; // State
+	    DatatoWrite[19] = getRowData()[18]; // Zip   
 	  
 	    if(getRowData()[17].length()<5)
 		{
@@ -864,12 +722,19 @@ public class modifyorder
 		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);//capture the webpage
 		FileUtils.copyFile(scrFile, new File(ResultPath+"/"+iteration+" "+filename+".png"));
 	}
+	
 	private String[] Rowdata;
-	public String[] getRowData(){return this.Rowdata; }
-	public void setRowData(String[] arrValue){this.Rowdata = arrValue;}
-
-
->>>>>>> 14c6bb816a70aa9d18c7edbf04e9383d3bedcb4d
+	
+	public String[] getRowData()
+	{
+		return this.Rowdata; 
+	}
+	
+	public void setRowData(String[] arrValue)
+	{
+		this.Rowdata = arrValue;
+	}
+	
 }
 	/*	@After
 		public void tearDown() throws Exception 

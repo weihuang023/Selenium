@@ -1,6 +1,6 @@
-S.No,RunStatus,Brand,User type,UserName,pwd,OrderNumber,CardMessage,FirstName,LastName,Location,Company,PhoneNumber,Add1,Add2,city,state,zip,Deliverydate,Result,Comments
-1,,18F,GU,,,W00995422630853,No,Wei,Huang,Residence,,9173318880,1 Main st.,,Flushing,NY,11514,5/14/2018,,
-2,,18F,GU,,,W00995422675557,No,Wei,Huang,Residence,,9173318880,1 Main st.,,Flushing,NY,11355,5/14/2018,,
+S.No,RunStatus,Brand,User type,UserName,Pwd,OrderNumber,CardMessage,FirstName,LastName,Location,Company,PhoneNumber,Add1,Add2,City,State,Zip,Deliverydate,Result,Comments
+1,,18F,GU,,,W00995422678559,AAA,tangore,gupt,Residence,,3453453454,1 old country rd.,ste 500,Carle Place,NY,11355,5/14/2018,,
+2,,18F,GU,,,W00995422678505,No,Wei,Huang,Residence,,9173318880,1 Main st.,,Flushing,NY,11355,5/14/2018,,
 3,,18B,PU,,,,,,,,,,,,,,,,,
 4,,FBQ,GU,,,,,,,,,,,,,,,,,
 5,,FBQ,RU,,,,,,,,,,,,,,,,,
