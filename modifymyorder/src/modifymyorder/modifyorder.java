@@ -49,23 +49,48 @@ public class modifyorder
 					{
 		        	   
 
-						String[][] order = {{"W00995422675557","11355"},{"W00995422630853","11514"}};
+						String[][] order = {{"W00995422678505","11355"},{"W00995422675557","11355"},{"W00995422630853","11514"}};
 						//Calling browser and accessing 18F URL
 		        	
 						callBrowser();
 						deleteCookies();
-						driver.get("https://akamai.1800flowers-uat.net");Thread.sleep(1000);
-					    WebDriverWait wait = new WebDriverWait(driver, 60);
+						System.out.println("---------------------------------- Test Start --------------------------------");
+						System.out.println("Step 1: Go To the Home Page ");
+						driver.get("https://akamai.1800flowers-uat.net");
+						Thread.sleep(1000);
+					    //WebDriverWait wait = new WebDriverWait(driver, 60);
 						//goto_Orderdetailspage_Registered("W00995422667594","mmotest@tag.com","tag@123");
-						goto_TrackOrderPage_Guest(order[0][0],order[0][1]);
+						
 						String userType = "GU";
+						//String userType = "RU";
+						if (userType == "GU")
+						{
+							System.out.println("Step 2: Track Order by User Type " +userType);
+							System.out.println("Step 3: Enter Order#:  "+order[0][0]+ " Zip: "+order[0][1]);
+							goto_TrackOrderPage_Guest(order[0][0],order[0][1]);
+						}
+						else
+						{
+							System.out.println("Step 2: Track Order By User Type " +userType);
+							System.out.println("Step 3: Order "+order[0][0]+ " Email "+order[0][1]+ " Password ");
+						}
+						
+						System.out.println("Step 4: View/Modify Order Details ");
 						goto_OrderDetails(userType,order[0][0]);
+						
 						modifyOrder_False();
-						checkCardMessage();
-						checkDeliveryDate();
-						checkShipAddress();
+//						checkCardMessage();
+//						checkDeliveryDate();
+//						checkShipAddress();
+					
+						System.out.println("Step 5: Add or Update Message ");
 						updateMessage();
+						System.out.println("Step 8: Update Recipient Information ");
+						updateAddress();
+						
+						review();
 						driver.quit();
+						System.out.println("---------------------------------- Test End ----------------------------------");
 						
 //						driver.findElement(By.id("modifyCardMessage")).click();
 //						
@@ -125,24 +150,21 @@ public class modifyorder
 	           try
 				{
 					String ErrorMessage = driver.findElement(By.className("orderNotModifiableErr")).getText();
-					System.out.println("Error message:" + ErrorMessage);
+					System.out.println("Error:" + ErrorMessage);
 					if(ErrorMessage.contains("This order may no longer be modified"))
 					{
-						System.out.println("Order not modifiable - Passed");
+						System.out.println("No Orders can be modified - Passed");
 					    driver.quit();
 					    driver = null;
+					    System.out.println("---------------------------------- Test End    --------------------------------");
 					    System.exit(1);
-					}
-					else 
-					{
-						System.out.println("Should not Modify Past order - Failed");	
 					}
 			    }
 		
 				catch(Exception e)
 				{
 					//e.printStackTrace();
-					System.out.println("View/Modify Order Dtails........................");
+					System.out.println("Get Order Details........................");
 					//driver.quit();
 				}
 	}
@@ -220,8 +242,8 @@ public class modifyorder
 	//	
 	//	driver = new FirefoxDriver(ffprofile);
 	//########################################################################################################################
-	//System.setProperty("webdriver.chrome.driver", "C:/Users/loadtest/Documents/GitHub/myorder-selenium/modifymyorder/lib/chromedriver.exe");
-	System.setProperty("webdriver.chrome.driver", "C:/Selenium Testing 2/eclipse/myorder-selenium/modifymyorder/lib/chromedriver.exe");
+	System.setProperty("webdriver.chrome.driver", "C:/Users/loadtest/Documents/GitHub/myorder-selenium/modifymyorder/lib/chromedriver.exe");
+	//System.setProperty("webdriver.chrome.driver", "C:/Selenium Testing 2/eclipse/myorder-selenium/modifymyorder/lib/chromedriver.exe");
 	ChromeOptions  options = new ChromeOptions();
 	options.addArguments("start-maximized");
 	driver = new ChromeDriver(options);
@@ -283,21 +305,20 @@ public class modifyorder
            try
 			{
 				String ErrorMessage = driver.findElement(By.cssSelector("div.confirmmessage")).getText();
-				System.out.println("Car Message: "+ErrorMessage.split("\n")[1]);
-				if(ErrorMessage.contains("test"))
-				{
-					System.out.println("Card Message Existing ---------------------- Passed");
-				}
-				else 
+				System.out.println("Card Message: "+ErrorMessage.split("\n")[1]);
+				if(ErrorMessage.contains("No Card Message"))
 				{
 					System.out.println("Card Message does not Existing");
 					System.out.println("You could Update the Card Message ......");
+				}
+				else 
+				{
+					System.out.println("Card Message Existing ---------------------- Passed");
 				}
 		    }
 			catch(Exception e)
 			{
 				e.printStackTrace();
-				//System.out.println("You could Update the Card Message ......");
 			}
     }
 
@@ -344,9 +365,88 @@ public class modifyorder
     {           
            try
 			{
-				// Shipping Address:::::::::
+        	    String firstName = "tangore";
+        	    String lastName = "gupt";
+        	    String phoneNumber = "3453453454";
+        	    String locationType = "Business";
+        	    String address1 = "1 old country rd";
+        	    String company = "test";
+        	    String address2 = "ste 500";
+        	    String city = "Carle Place";
+        	    String state = "NY";
+        	    String zipcode = "11514";
+        	    
+        	    driver.findElement(By.xpath("//div[contains(text(), 'Update Recipient Details')]")).click();
+        	    Thread.sleep(3000);
+        	    String initFirst = driver.findElement(By.id("firstName")).getAttribute("value");
+        	    String initLast = driver.findElement(By.id("lastName")).getAttribute("value");
+        	    String initPhoneNumber = driver.findElement(By.id("phoneNumber")).getAttribute("value");
+        	    String initAddress1 = driver.findElement(By.id("addressLine1")).getAttribute("value");
+        	    String initAddress2 = driver.findElement(By.id("addressLine2")).getAttribute("value");
+        	    String initCity = driver.findElement(By.id("cityName")).getAttribute("value");
+        	    String initState = driver.findElement(By.id("state")).getAttribute("value");
+        	    String initZipcode = driver.findElement(By.id("zipCode")).getAttribute("value");
+        	    
+         	    System.out.println("++++++++++ Verify Old Recipient Info +++++++++++++++++");
+        	    System.out.println("Init First Name:    "+initFirst);
+        	    System.out.println("Init Last  Name:    "+initLast);
+        	    System.out.println("Init Phone Number:  "+initPhoneNumber);
+        	    System.out.println("Init Address1:      "+initAddress1);
+        	    System.out.println("Init Address2:      "+initAddress2);
+        	    System.out.println("Init City:          "+initCity);
+        	    System.out.println("Init State:         "+initState);
+        	    System.out.println("Init Zipcode:       "+initZipcode);
+        	    
+        	    System.out.println("++++++++++ Update New Recipient Info +++++++++++++++++");
+                System.out.println("Enter New First Name     :" +firstName);
+                driver.findElement(By.id("firstName")).click();
+                driver.findElement(By.id("firstName")).clear();
+                driver.findElement(By.id("firstName")).sendKeys(firstName);
+                
+                System.out.println( "Enter New Last  Name     :" +lastName);
+                driver.findElement(By.id("lastName")).click();
+                driver.findElement(By.id("lastName")).clear();
+                driver.findElement(By.id("lastName")).sendKeys(lastName);
+                
+                System.out.println( "Enter New Phone Number   :"  +phoneNumber);
+                driver.findElement(By.id("phoneNumber")).click();
+                driver.findElement(By.id("phoneNumber")).clear();
+                driver.findElement(By.id("phoneNumber")).sendKeys(phoneNumber);
+                
+                System.out.println("Select New Location Type :" +locationType);
+                driver.findElement(By.id("locationType")).click();
+                new Select(driver.findElement(By.id("locationType"))).selectByVisibleText(locationType);
+                
+                System.out.println("Enter New Company        :" +company);
+                driver.findElement(By.xpath("//option[@value='2']")).click();
+                driver.findElement(By.id("company")).click();
+                driver.findElement(By.id("company")).clear();
+                driver.findElement(By.id("company")).sendKeys(company);
+        
+                System.out.println("Enter New Adreess1       :"+address1);
+                driver.findElement(By.id("addressLine1")).click();
+                driver.findElement(By.id("addressLine1")).clear();
+                driver.findElement(By.id("addressLine1")).sendKeys(address1);
+                
+                System.out.println("Enter New Adreess2       :" +address2);
+                driver.findElement(By.id("addressLine2")).click();
+                driver.findElement(By.id("addressLine2")).clear();
+                driver.findElement(By.id("addressLine2")).sendKeys(address2);
+                
+                System.out.println("Enter New City           :" +city);
+                driver.findElement(By.id("cityName")).click();
+                driver.findElement(By.id("cityName")).clear();
+                driver.findElement(By.id("cityName")).sendKeys(city); 
+                
+                System.out.println("Select New State         :" +state);
+                driver.findElement(By.id("state")).click();
+                new Select(driver.findElement(By.id("state"))).selectByValue(state);
+                
+                System.out.println("Enter New Zipcode        :"  +zipcode);
+                driver.findElement(By.id("zipCode")).click();
+                driver.findElement(By.id("zipCode")).clear();
+                driver.findElement(By.id("zipCode")).sendKeys(zipcode); 
 		    }
-	
 			catch(Exception e)
 			{
 				e.printStackTrace();
@@ -360,12 +460,33 @@ public class modifyorder
            try
 			{
 				driver.findElement(By.id("modifyCardMessage")).click();
-				Thread.sleep(15000);
-				driver.findElement(By.cssSelector("button.btn-cancel.bg-black")).click();
-				driver.findElement(By.id("modifyCardMessage")).click();
-				Thread.sleep(10000);
-				String message = driver.findElement(By.id("mod_character_count")).getText();
-				System.out.println(message);
+				WebDriverWait wait = new WebDriverWait(driver, 60);
+				wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
+				
+				WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
+				driver.switchTo().frame(iframeSwitch);						
+				WebElement MessageArea = wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("editgiftmessage"))));
+				String message = MessageArea.getText();
+				String characterCount =  driver.findElement(By.id("mod_character_count")).getText();
+				System.out.println("Init Mess  on Modify My Order: "+message);
+				System.out.println("Init Count on Modify My Order: "+characterCount);
+				
+				System.out.println("Step 6: Continue Modify My Order");
+				Thread.sleep(3000);
+				driver.findElement(By.cssSelector("button.btn-continue.bg-brandColor-primary")).click();
+				String warnMessage = driver.findElement(By.cssSelector("div.warning-dialogue")).getText();
+				System.out.println("Warning: "+warnMessage);
+
+				System.out.println("Step 7: Update New Card Message");
+				MessageArea.sendKeys(Keys.TAB);
+				MessageArea.clear();
+				String newCardMessage = "Test Automation 2000000000000000000000";
+				MessageArea.sendKeys(newCardMessage);
+				String message1 = MessageArea.getText();
+				String characterCount1 =  driver.findElement(By.id("mod_character_count")).getText();
+				System.out.println("New Mess  on Modify My Order: "+message1);
+				System.out.println("New Count on Modify My Order: "+characterCount1);
+				
 		    }
 	
 			catch(Exception e)
@@ -375,21 +496,19 @@ public class modifyorder
 				driver.quit();
 			}
     }
-
+    
+    
     public void updateDate() throws Exception 
     {           
            try
 			{
-				String ErrorMessage = driver.findElement(By.xpath("//div[@id='Confirm-Wrap']/div[6]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div")).getText();
-				System.out.println("Error message:" + ErrorMessage);
-				if(ErrorMessage.contains("St.")){System.out.println("Shipping Address Existing - Passed");}
-				else {System.out.println("Shipping Address does not existing - Failed");}
+        	   //Delivery date update
 		    }
 	
 			catch(Exception e)
 			{
 				e.printStackTrace();
-				System.out.println("error occured, SHIPPING ADDRESS DOES NOT EXISTING - Failed");
+				System.out.println("error occured, Update Delivery Date - Failed");
 				driver.quit();
 			}
     }
@@ -398,24 +517,67 @@ public class modifyorder
     {           
            try
 			{
-				String ErrorMessage = driver.findElement(By.cssSelector("div.confirmship")).getText();
-				System.out.println("Error message:" + ErrorMessage);
-				if(ErrorMessage.contains("St.")){System.out.println("Shipping Address Existing - Passed");}
-				else {System.out.println("Shipping Address does not existing - Failed");}
+       		    WebDriverWait wait = new WebDriverWait(driver, 60);
+				System.out.println("Step 8: Continue Modify My Order Again");
+				driver.findElement(By.cssSelector("button.btn-continue.bg-brandColor-primary")).click();
+				Thread.sleep(3000);
+				System.out.println("Step 9: Verify Updated Card Message/Addresses ");
+				String updateMessage = driver.findElement(By.xpath("//div[2]/div[2]/div[2]/div/p")).getText();
+				String updateName = driver.findElement(By.xpath("//div[3]/div/p")).getText();
+				String updatePhone = driver.findElement(By.xpath("//p[2]")).getText();
+				String updateLocationType = driver.findElement(By.xpath("//p[3]")).getText();
+				String updateAddressline1 = driver.findElement(By.xpath("//p[5]")).getText();
+				String updateAddressline2 = driver.findElement(By.xpath("//p[6]")).getText();
+				String updateCity = driver.findElement(By.xpath("//p[7]")).getText();
+				String updateState = driver.findElement(By.xpath("//p[8]")).getText();
+				String updateZipcode = driver.findElement(By.xpath("//p[9]")).getText();
+				String updateDeliveryDate = driver.findElement(By.xpath("//div[4]/div/p")).getText();
+				System.out.println("-------------- Review Your Change --------------- ");
+				System.out.println("Card Message   :"+updateMessage);
+				System.out.println("Recipient Name :"+updateName);
+				System.out.println("Phone Number   :"+updatePhone);
+				System.out.println("Location Type  :"+updateLocationType);
+				System.out.println("Delivery Date  :"+updateDeliveryDate);
+				System.out.println("Address 1	   :"+updateAddressline1);
+				System.out.println("Address 2	   :"+updateAddressline2);
+				System.out.println("City		   :"+updateCity);
+				System.out.println("State		   :"+updateState);
+				System.out.println("Zipcode		   :"+updateZipcode);
+				System.out.println("Step 10: Submit Change ");
+				driver.findElement(By.cssSelector("button.btn-submit.bg-brandColor-primary")).click();
+				wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("h1.txt_hdr-xl.txt_align-center"))));
+				String thankYouMessage = driver.findElement(By.cssSelector("h1.txt_hdr-xl.txt_align-center")).getText();
+				String thankYouMessage1 = driver.findElement(By.cssSelector("p.txt_base.txt_align-center")).getText();
+				System.out.println(thankYouMessage);
+				System.out.println(thankYouMessage1);
+				wait.until(ExpectedConditions.visibilityOfElementLocated((By.linkText("Close"))));
+				driver.findElement(By.linkText("Close")).click();
+				System.out.println("Step 11: Verify Pending Queue Message After Submit Change ");
+				driver.switchTo().defaultContent();
+				Thread.sleep(15000);
+				driver.findElement(By.id("modifyCardMessage")).click();
+				wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("mod_window"))));
+				WebElement iframeSwitch = driver.findElement(By.xpath("//iframe[contains(@id, 'mod_window')and contains (@class, 'mod-modal')]"));
+				driver.switchTo().frame(iframeSwitch);						
+				wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("p.txt_base.txt_align-center"))));
+				String pendingQueueMessage = driver.findElement(By.cssSelector("p.txt_base.txt_align-center")).getText();
+				System.out.println(pendingQueueMessage);
 		    }
 	
 			catch(Exception e)
 			{
 				e.printStackTrace();
-				System.out.println("error occured, SHIPPING ADDRESS DOES NOT EXISTING - Failed");
+				System.out.println("error occured, REVIEW UPDATED - Failed");
 				driver.quit();
 			}
     }
+    
 
     public void deleteCookies() throws InterruptedException
     {
     	driver.manage().deleteAllCookies();
     }
+
 }
 	/*	@After
 		public void tearDown() throws Exception 
