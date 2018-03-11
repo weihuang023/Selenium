@@ -1,5 +1,5 @@
-package modifyMyOrder; 
-//Created By Tagore 1/12/18
+package seleniumMMO; 
+
 import java.io.FileWriter;
 //import java.io.IOException;
 //import java.math.BigDecimal;
@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ModifyOrder 
+public class MMO 
 {
 	//variables declaration goes here
 	public WebDriver driver;
