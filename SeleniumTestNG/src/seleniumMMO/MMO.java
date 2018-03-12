@@ -30,16 +30,16 @@ public class MMO
 	public SimpleDateFormat formatter=  new SimpleDateFormat("yyyy_MMM_dd HH_mm_ss");
 	public String[] datatoWrite = new String[30];
 	ArrayList<String> readCsv = new ArrayList<String>();
-	String FilePath = "C:\\Users\\weih8\\git\\Selenium\\";
+	String filePath = "C:\\Users\\weih8\\git\\Selenium\\";
 	//String FilePath = "C:/Selenium Testing 2/eclipse/myorder-selenium/";
-	String ResultPath;
+	String resultPath;
 	
 	
 	@Before
 	public void setUp() throws Exception 
 		{
 			setFramework();
-			readCsv = readCsv(FilePath+"MMO.csv");
+			readCsv = readCsv(filePath+"MMO.csv");
 		}
 
 	//Start the scripts		
@@ -621,8 +621,8 @@ public class MMO
 		String datewithtime = formatter.format(currentDate.getTime());
 		//String[] datetime = datewithtime.split(" ");
 		String datenow = datewithtime.split(" ")[0].replace("/", "_");	
-		new File(FilePath+datenow).mkdirs();
-		ResultPath = FilePath+datenow;
+		new File(filePath+datenow).mkdirs();
+		resultPath = filePath+datenow;
 		writecsvHeader(20);
 	}
 	
@@ -651,32 +651,51 @@ public class MMO
 			}	
 	
 	public void writecsvHeader(int size) throws Exception
-	{   //S.No	RunStatus	Brand	User type	UserName	Pwd	
-		//OrderNumber	CardMessage	FirstName	LastName	Location	Company	PhoneNumber	Add1	
-		//Add2	City	State	Zip	Deliverydate	Result	Comments
+	{   
+		//S.No	
+		//RunStatus	
+		//Brand	
+		//User type	
+		//UserName
+		//PWD	
+		//Order Number
+		//CardMessage
+		//FirstName
+		//LastName
+		//Location
+		//Company
+		//PhoneNumber
+		//Add1	
+		//Add2
+		//City
+		//State
+		//ZipCode
+		//Delivery Date
+		//Result
+		//Comments
 
-		String[] Header = new String[size];
-		Header[0]="S.No";
-		Header[1]="RunStatus";
-		Header[2]="Brand";
-		Header[3]="Usertype";
-		Header[4]="OrderNumber";
-		Header[5]="CardMessage";
-		Header[6]="New FirstName";
-		Header[7]="New LastName";
-		Header[8]="Location";
-		Header[9]="Company";
-		Header[10]="PhoneNumber";
-		Header[11]="Add1";
-		Header[12]="Add2";
-		Header[13]="City";
-		Header[14]="State";
-		Header[15]="Zip";
-		Header[16]="Deliverydate";
-		Header[17]="Result";
-		Header[18]="Comments";
-		Header[19] = "Defect";
-		writeCsv(ResultPath+"/Result.csv",Header);
+		String[] header = new String[size];
+		header[0]="S.No";
+		header[1]="RunStatus";
+		header[2]="Brand";
+		header[3]="Usertype";
+		header[4]="OrderNumber";
+		header[5]="CardMessage";
+		header[6]="New FirstName";
+		header[7]="New LastName";
+		header[8]="Location";
+		header[9]="Company";
+		header[10]="PhoneNumber";
+		header[11]="Add1";
+		header[12]="Add2";
+		header[13]="City";
+		header[14]="State";
+		header[15]="Zip";
+		header[16]="Deliverydate";
+		header[17]="Result";
+		header[18]="Comments";
+		header[19] = "Defect";
+		writeCsv(resultPath+"/result.csv",header);
 		
 	}
 	
@@ -720,7 +739,7 @@ public class MMO
 		//highlightElement(driver.findElement(By.id("placeOrderBtnStatic")));
 		driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
 		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);//capture the webpage
-		FileUtils.copyFile(scrFile, new File(ResultPath+"/"+iteration+" "+filename+".png"));
+		FileUtils.copyFile(scrFile, new File(resultPath+"/"+iteration+" "+filename+".png"));
 	}
 	
 	private String[] Rowdata;
