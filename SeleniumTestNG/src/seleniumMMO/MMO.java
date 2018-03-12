@@ -28,9 +28,9 @@ public class MMO
 	public String timeinsec;
 	public Calendar currentDate = Calendar.getInstance();
 	public SimpleDateFormat formatter=  new SimpleDateFormat("yyyy_MMM_dd HH_mm_ss");
-	public String[] DatatoWrite = new String[30];
-	ArrayList<String> ReadCsv = new ArrayList<String>();
-	String FilePath = "C:/Users/loadtest/Documents/GitHub/myorder-selenium/";
+	public String[] datatoWrite = new String[30];
+	ArrayList<String> readCsv = new ArrayList<String>();
+	String FilePath = "C:\\Users\\weih8\\git\\Selenium\\";
 	//String FilePath = "C:/Selenium Testing 2/eclipse/myorder-selenium/";
 	String ResultPath;
 	
@@ -39,19 +39,18 @@ public class MMO
 	public void setUp() throws Exception 
 		{
 			setFramework();
-			ReadCsv = readCsv(FilePath+"ModifyMyOrder.csv");
+			readCsv = readCsv(FilePath+"MMO.csv");
 		}
 
-	//Start the script 		
+	//Start the scripts		
 	@Test
-	public void FPT_ModifyOrder() throws Exception 
+	public void modifyMyOrder_WithGuestAndRegiesterOrderNum() throws Exception 
 		{           
 		   for(int i=1;i<=1;i++)
 		   {   
 				try 
 				{	
-						setRowData(ReadCsv.get(i).split(","));
-				
+						setRowData(readCsv.get(i).split(","));
 						if(getRowData()[2].equals("Done"))	{System.out.println("Test"+i +" Done, skipping");continue;}
 						datatowrite(i);
 	        			resetValues();
@@ -83,7 +82,7 @@ public class MMO
 					    if (userType == "RU"||userType == "PU")
 					    {
 					    	System.out.println("Step 2: Track Order By User Type: " +userType);
-							goto_Orderdetailspage_Registered(orderNumber,userName, pwd);
+							goto_OrderDetailsPage_Registered(orderNumber,userName, pwd);
 					    }
 					    else
 					    {
@@ -245,7 +244,7 @@ public class MMO
 	//	
 	//	driver = new FirefoxDriver(ffprofile);
 	//########################################################################################################################
-	System.setProperty("webdriver.chrome.driver", "C:/Users/loadtest/Documents/GitHub/myorder-selenium/modifymyorder/lib/chromedriver.exe");
+	System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
 	//System.setProperty("webdriver.chrome.driver", "C:/Selenium Testing 2/eclipse/myorder-selenium/modifymyorder/lib/chromedriver.exe");
 	ChromeOptions  options = new ChromeOptions();
 	options.addArguments("start-maximized");
@@ -279,7 +278,7 @@ public class MMO
     	driver.findElement(By.cssSelector("input[alt=\"Submit\"]")).click();
     }
 
-    public void goto_Orderdetailspage_Registered(String orderNumber, String userName, String pwd)
+    public void goto_OrderDetailsPage_Registered(String orderNumber, String userName, String pwd)
     {
     	//Click on My Orders, enter order details and click submit
     	driver.findElement(By.linkText("Track Your Order")).click();
@@ -683,37 +682,36 @@ public class MMO
 	
 	public void resetValues()
 	{
-		for(int j=0;j<DatatoWrite.length;j++){DatatoWrite[j]="";}	
+		for(int j=0;j<datatoWrite.length;j++){datatoWrite[j]="";}	
 	}
 	
 	public void datatowrite(int iteration)
 	{
-		DatatoWrite[1] = Integer.toString(iteration);
-		DatatoWrite[2] = getRowData()[1];   // TC no
-		DatatoWrite[3] = getRowData()[2];   // Run Status
-	    DatatoWrite[4] = getRowData()[3];   // Brand
-	    DatatoWrite[5] = getRowData()[4];   // User Type
-	    DatatoWrite[6] = getRowData()[5];   // User Name
-	    DatatoWrite[7] = getRowData()[6];   // Pwd
-	    DatatoWrite[8] = getRowData()[7];   // OrderNumber
-	    DatatoWrite[9] = getRowData()[8];   // CardMessage
-	    DatatoWrite[10] = getRowData()[9];  // FirstName
-	    DatatoWrite[11] = getRowData()[10]; // LastName
-	    DatatoWrite[12] = getRowData()[11]; // Location
-	    DatatoWrite[13] = getRowData()[12]; // Company
-	    DatatoWrite[14] = getRowData()[13]; // PhoneNumber
-	    DatatoWrite[15] = getRowData()[14]; // Add 1
-	    DatatoWrite[16] = getRowData()[15]; // Add 2
-	    DatatoWrite[17] = getRowData()[16]; // City
-	    DatatoWrite[18] = getRowData()[17]; // State
-	    DatatoWrite[19] = getRowData()[18]; // Zip   
+		datatoWrite[1] = Integer.toString(iteration);
+		datatoWrite[2] = getRowData()[1];   // TC no
+		datatoWrite[3] = getRowData()[2];   // Run Status
+	    datatoWrite[4] = getRowData()[3];   // Brand
+	    datatoWrite[5] = getRowData()[4];   // User Type
+	    datatoWrite[6] = getRowData()[5];   // User Name
+	    datatoWrite[7] = getRowData()[6];   // Pwd
+	    datatoWrite[8] = getRowData()[7];   // OrderNumber
+	    datatoWrite[9] = getRowData()[8];   // CardMessage
+	    datatoWrite[10] = getRowData()[9];  // FirstName
+	    datatoWrite[11] = getRowData()[10]; // LastName
+	    datatoWrite[12] = getRowData()[11]; // Location
+	    datatoWrite[13] = getRowData()[12]; // Company
+	    datatoWrite[14] = getRowData()[13]; // PhoneNumber
+	    datatoWrite[15] = getRowData()[14]; // Add 1
+	    datatoWrite[16] = getRowData()[15]; // Add 2
+	    datatoWrite[17] = getRowData()[16]; // City
+	    datatoWrite[18] = getRowData()[17]; // State
+	    datatoWrite[19] = getRowData()[18]; // Zip   
 	  
 	    if(getRowData()[17].length()<5)
 		{
-			if(getRowData()[17].length() == 4) DatatoWrite[10] = "0"+getRowData()[19];
-			if(getRowData()[17].length() == 3) DatatoWrite[10] = "00"+getRowData()[19];
+			if(getRowData()[17].length() == 4) datatoWrite[10] = "0"+getRowData()[19];
+			if(getRowData()[17].length() == 3) datatoWrite[10] = "00"+getRowData()[19];
 		}
-	    
 }
 
 	public void takeScreenshot(String iteration, String filename) throws Exception
@@ -738,10 +736,12 @@ public class MMO
 	}
 	
 }
-	/*	@After
+	/*	
+	 	@After
 		public void tearDown() throws Exception 
 		{
 			String verificationErrorString = verificationErrors.toString();	
 			if (!"".equals(verificationErrorString)){fail(verificationErrorString);}
-		}*/
+		}
+	*/
 
