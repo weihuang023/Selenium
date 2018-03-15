@@ -296,7 +296,7 @@ public class MMO
     			break;	
     		
     		case "IE":
-    			System.setProperty("webdriver.ie.driver", "../IEDriverServer_Win32_2.45.0/IEDriverServer_Win32_2.45.0.exe");
+    			System.setProperty("webdriver.ie.driver", "./lib/IEDriverServer_Win32_2.45.0.exe");
     			driver=new InternetExplorerDriver();
     			break;
     				
