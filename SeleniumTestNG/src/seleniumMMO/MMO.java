@@ -1,4 +1,4 @@
-package modifyMyOrder; 
+package seleniumMMO; 
 
 import java.io.FileWriter;
 //import java.io.IOException;
@@ -23,7 +23,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ModifyOrder 
+public class MMO 
 {
 	//variables declaration goes here
 	public WebDriver driver;
@@ -41,14 +41,14 @@ public class ModifyOrder
 	public void setUp() throws Exception 
 		{
 			setFramework();
-			ReadCsv = readCsv(FilePath+"ModifyMyOrder.csv");
+			ReadCsv = readCsv(FilePath+"MMO.csv");
 			
 		}
 	//Start the script 		
 	//@Test
 	public void modifyMyOrder_Tests() throws Exception {
 	
-		   for(int i=28;i<=28;i++) {   
+		   for(int i=2;i<=2;i++) {   
 			   resetValues();
 				try {		
     			
@@ -58,25 +58,25 @@ public class ModifyOrder
 						datatowrite(i);
 
 	        			///************Read Excel**************///
-	        			String TestCase = getRowData()[1];
-	        			String RunStatus = getRowData()[2];
-	        			String brand = getRowData()[3];
+//	        			String TestCase = getRowData()[1];
+//	        			String RunStatus = getRowData()[2];
+//	        			String brand = getRowData()[3];
 	        			String userType = getRowData()[4]; 
 	        			String userName = getRowData()[5];
 	        			String pwd = getRowData()[6];
-	        			String ExpectedMMOStatus = getRowData()[7];
+	        			String ExpectedMMOStatus = "False";
 	        			String orderNumber = getRowData()[8];
 	        			//**********************************//
 	        			
 	        			//**Orderdetails before modification***//
-	        			String cardMessage = getRowData()[9];
+//	        			String cardMessage = getRowData()[9];
 	        			String zipcode =  getRowData()[19];
-	            	    String deliveryDate = getRowData()[20];
+//	            	    String deliveryDate = getRowData()[20];
 	            	    //**********************************//
 	            	    
 	            	    //** New Orderdetails*****//
 	        			String NewCardMessage = getRowData()[21];
-	            	    String NewDelDate = getRowData()[32];
+//	            	    String NewDelDate = getRowData()[32];
 	        			///================End of excel code=====///
 						String Comment ="";
 	            	    
@@ -105,7 +105,7 @@ public class ModifyOrder
 						if (ExpectedMMOStatus.contains("FALSE")) { 
 							System.out.println("Validating Error Message ");
 							modifyOrder_False();
-							//continue;
+//							continue;
 							driver.quit();
 						}
 						
@@ -154,10 +154,9 @@ public class ModifyOrder
 
 	@Test
 	public void modifyOrderValidateFieldErrors_Tests() throws Exception {
-	   for(int i=28;i<=28;i++) {   
+	   for(int i=2;i<=2;i++) {   
 		   resetValues();
-			try {		
-			
+			try {	
 					setRowData(ReadCsv.get(i).split(","));
 			
 					if(getRowData()[2].equals("Done"))	{System.out.println("Test"+i +" Done, skipping");continue;}
@@ -290,14 +289,14 @@ public class ModifyOrder
     			break;
     		
     		case "CH":
-    			System.setProperty("webdriver.chrome.driver","../modifymyorder/lib/chromedriver.exe");
+    			System.setProperty("webdriver.chrome.driver","./lib/chromedriver.exe");
     			ChromeOptions  options = new ChromeOptions();
     			options.addArguments("start-maximized");
     			driver = new ChromeDriver(options);
     			break;	
     		
     		case "IE":
-    			System.setProperty("webdriver.ie.driver", "C:/Selenium Testing/Selenium component/IEDriverServer_Win32_2.45.0/IEDriverServer_Win32_2.45.0.exe");
+    			System.setProperty("webdriver.ie.driver", "../IEDriverServer_Win32_2.45.0/IEDriverServer_Win32_2.45.0.exe");
     			driver=new InternetExplorerDriver();
     			break;
     				
@@ -1012,21 +1011,21 @@ public class ModifyOrder
 	    DatatoWrite[7] = getRowData()[7];   // Pwd
 	    DatatoWrite[8] = getRowData()[8];   // OrderNumber
 	    DatatoWrite[9] = getRowData()[21];  // CardMessage
-	    DatatoWrite[10] = getRowData()[22]; // FirstName
-	    DatatoWrite[11] = getRowData()[23]; // LastName
-	    DatatoWrite[12] = getRowData()[24]; // Location
-	    DatatoWrite[13] = getRowData()[25]; // Company
-	    DatatoWrite[14] = getRowData()[26]; // PhoneNumber
-	    DatatoWrite[15] = getRowData()[27]; // Add 1
-	    DatatoWrite[16] = getRowData()[28]; // Add 2
-	    DatatoWrite[17] = getRowData()[29]; // City
-	    DatatoWrite[18] = getRowData()[30];   // State 
-	    DatatoWrite[19] = getRowData()[31]; // Zip
-	    DatatoWrite[20] = getRowData()[32]; //New Delivery date
-	    if(getRowData()[31].length()<5)
+	    DatatoWrite[10] = getRowData()[20]; // FirstName
+	    DatatoWrite[11] = getRowData()[21]; // LastName
+	    DatatoWrite[12] = getRowData()[22]; // Location
+	    DatatoWrite[13] = getRowData()[23]; // Company
+	    DatatoWrite[14] = getRowData()[24]; // PhoneNumber
+	    DatatoWrite[15] = getRowData()[25]; // Add 1
+	    DatatoWrite[16] = getRowData()[26]; // Add 2
+	    DatatoWrite[17] = getRowData()[27]; // City
+	    DatatoWrite[18] = getRowData()[28];   // State 
+	    DatatoWrite[19] = getRowData()[29]; // Zip
+	    DatatoWrite[20] = getRowData()[30]; //New Delivery date
+	    if(getRowData()[30].length()<5)
 		{
-			if(getRowData()[31].length() == 4) DatatoWrite[10] = "0"+getRowData()[31];
-			if(getRowData()[31].length() == 3) DatatoWrite[10] = "00"+getRowData()[31];
+			if(getRowData()[30].length() == 4) DatatoWrite[10] = "0"+getRowData()[30];
+			if(getRowData()[30].length() == 3) DatatoWrite[10] = "00"+getRowData()[30];
 		}
 	    
 }
